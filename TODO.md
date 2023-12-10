@@ -1,0 +1,11 @@
+# Requirement 11/12/2023
+- [ ] [API endpoint] server should be able to do health check
+- [ ] [API endpoint] server should have signup endpoint
+    - signup endpoint should accept request body
+        - request body should have:
+          - username
+          - user's first name
+          - user's last name
+          - user's email
+          - user's password
+- [ ] [API endpoint] server should be able to send user information by id
