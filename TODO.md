@@ -1,9 +1,6 @@
 # TODO
 - [ ] [Setup] CI/CD
-- [x] [Setup] response object (common response class)
-- [ ] [Setup] setup exception
-- [ ] [API endpoint] server should be able to send user information by id
-    - [ ] handle user's id not found
+- [ ] [Setup] setup request validation
 - [ ] [API endpoint] server should have signup endpoint
     - [ ] handle user already exist
     - signup endpoint should accept request body
@@ -22,3 +19,7 @@
 # DONE
 - [x] [API endpoint] server should be able to do health check
 - [x] [Setup] set up postgresql database
+- [x] [Setup] response object (common response class)
+- [x] [Setup] setup exception
+- [x] [API endpoint] server should be able to send user information by id
+    - [x] handle user's id not found
