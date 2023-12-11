@@ -1,6 +1,7 @@
 # TODO
 - [ ] [Setup] CI/CD
-- [ ] [Setup] response object (common response class)
+- [x] [Setup] response object (common response class)
+- [ ] [Setup] setup exception
 - [ ] [API endpoint] server should be able to send user information by id
     - [ ] handle user's id not found
 - [ ] [API endpoint] server should have signup endpoint
