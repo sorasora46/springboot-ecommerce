@@ -4,8 +4,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.sora.ecommerce.exceptions.ApiException;
 import com.sora.ecommerce.models.domains.User;
 import com.sora.ecommerce.models.requests.CreateUserPayload;
 import com.sora.ecommerce.repositories.UserRepository;
@@ -25,21 +27,25 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = userRepository.findById(id);
 
         if (user.isEmpty())
-            return null;
+            throw new ApiException(HttpStatus.NOT_FOUND, "User id: " + id + " not found");
 
         return user.get();
     }
 
     @Override
     public UUID createUser(CreateUserPayload payload) {
-        String firstName = payload.getFirstName();
-        String lastName = payload.getLastName();
-        String email = payload.getEmail();
+        try {
+            String firstName = payload.getFirstName();
+            String lastName = payload.getLastName();
+            String email = payload.getEmail();
 
-        User newUser = new User(firstName, lastName, email);
+            User newUser = new User(firstName, lastName, email);
 
-        User result = userRepository.save(newUser);
+            User result = userRepository.save(newUser);
 
-        return result.getId();
+            return result.getId();
+        } catch (RuntimeException exception) {
+            throw new ApiException(exception.getMessage());
+        }
     }
 }
