@@ -1,13 +1,17 @@
 # Requirement 11/12/2023
 - [x] [API endpoint] server should be able to do health check
-- [ ] [Setup] set up postgresql database
-- [ ] [API endpoint] server should have signup endpoint
+- [x] [Setup] set up postgresql database
+- [x] [API endpoint] server should have signup endpoint
+    - [x] create User domain
+    - [x] create User's service
+        - [x] interface
+        - [x] impl
+    - [x] setup repository for User
     - signup endpoint should accept request body
-        - [ ] create User domain
         - request body should have User domain data:
           - username
           - user's first name
           - user's last name
           - user's email
           - user's password
-- [ ] [API endpoint] server should be able to send user information by id
+- [x] [API endpoint] server should be able to send user information by id
