@@ -1,8 +1,16 @@
 # TODO
 - [ ] [Setup] CI/CD
 - [ ] [Setup] setup request validation
-- [ ] [API endpoint] server should have signup endpoint
-    - [ ] handle user already exist
+
+# DONE
+- [x] [API endpoint] server should be able to do health check
+- [x] [Setup] set up postgresql database
+- [x] [Setup] response object (common response class)
+- [x] [Setup] setup exception
+- [x] [API endpoint] server should be able to send user information by id
+    - [x] handle user's id not found
+- [x] [API endpoint] server should have signup endpoint
+    - [x] handle user already exist
     - signup endpoint should accept request body
         - request body should have User domain data:
           - username
@@ -15,11 +23,3 @@
         - [x] interface
         - [x] impl
     - [x] [Setup] repository for User
-
-# DONE
-- [x] [API endpoint] server should be able to do health check
-- [x] [Setup] set up postgresql database
-- [x] [Setup] response object (common response class)
-- [x] [Setup] setup exception
-- [x] [API endpoint] server should be able to send user information by id
-    - [x] handle user's id not found
