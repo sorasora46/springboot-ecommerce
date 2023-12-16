@@ -42,9 +42,9 @@ public class UserServiceImpl implements UserService {
         User newUser = new User(firstName, lastName, email);
 
         if (userRepository.existsByEmail(email))
-            throw new ApiException(email + " already exist");
+            throw new ApiException(HttpStatus.CONFLICT, email + " already exist");
         if (userRepository.existsByName(firstName, lastName))
-            throw new ApiException(firstName + " " + lastName + " already exist");
+            throw new ApiException(HttpStatus.CONFLICT, firstName + " " + lastName + " already exist");
 
         User result = userRepository.save(newUser);
 
