@@ -9,6 +9,8 @@ import com.sora.ecommerce.models.requests.CreateUserPayload;
 import com.sora.ecommerce.response.ResponseHandler;
 import com.sora.ecommerce.services.UserService;
 
+import jakarta.validation.Valid;
+
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Object> createUser(@RequestBody CreateUserPayload payload) {
+    public ResponseEntity<Object> createUser(@Valid @RequestBody CreateUserPayload payload) {
         UUID id = userService.createUser(payload);
         return ResponseHandler.responseBuilder(HttpStatus.CREATED, ResponseStatus.SUCCESS, id);
     }
