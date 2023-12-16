@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -34,18 +35,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UUID createUser(CreateUserPayload payload) {
-        try {
-            String firstName = payload.getFirstName();
-            String lastName = payload.getLastName();
-            String email = payload.getEmail();
+        String firstName = payload.getFirstName();
+        String lastName = payload.getLastName();
+        String email = payload.getEmail();
 
-            User newUser = new User(firstName, lastName, email);
+        User newUser = new User(firstName, lastName, email);
 
-            User result = userRepository.save(newUser);
+        if (userRepository.existsByEmail(email))
+            throw new ApiException(email + " already exist");
+        if (userRepository.existsByName(firstName, lastName))
+            throw new ApiException(firstName + " " + lastName + " already exist");
 
-            return result.getId();
-        } catch (RuntimeException exception) {
-            throw new ApiException(exception.getMessage());
-        }
+        User result = userRepository.save(newUser);
+
+        return result.getId();
     }
 }
