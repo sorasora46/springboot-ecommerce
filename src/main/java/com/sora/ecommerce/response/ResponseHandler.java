@@ -12,7 +12,7 @@ public class ResponseHandler {
         response.put("code", statusCode.value());
         response.put("success", success);
 
-        String dataKey = success ? "data" : "error";
+        String dataKey = success ? "data" : "errors";
         response.put(dataKey, data);
 
         return new ResponseEntity<>(response, statusCode);
