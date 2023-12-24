@@ -11,5 +11,5 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS credentials (
     user_id uuid REFERENCES users(id),
     username VARCHAR(10) NOT NULL UNIQUE,
-    hashed_password VARCHAR(50) NOT NULL
+    hashed_password VARCHAR(60) NOT NULL
 );
