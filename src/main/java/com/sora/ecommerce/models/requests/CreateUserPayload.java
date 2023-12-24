@@ -18,7 +18,12 @@ public class CreateUserPayload {
     @Email(message = "email is not a valid email.")
     private String email;
 
+    @NotBlank(message = "username is required.")
+    @Size(min = 5, max = 10, message = "username must be between 5 to 10 characters.")
     private String username;
+
+    @NotBlank(message = "password is required.")
+    @Size(min = 8, max = 72, message = "password must be between 8 to 72 characters.")
     private String password;
 
     public CreateUserPayload() {
