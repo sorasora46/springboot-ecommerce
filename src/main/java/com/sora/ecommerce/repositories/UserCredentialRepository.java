@@ -13,4 +13,6 @@ public interface UserCredentialRepository extends JpaRepository<UserCredential, 
     @Query(value = "SELECT hashed_password FROM credentials WHERE user_id = ?1", nativeQuery = true)
     public Optional<String> getHashedPasswordById(UUID userId);
 
+    public Boolean existsByUsername(String username);
+
 }
