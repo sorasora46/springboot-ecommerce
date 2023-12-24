@@ -3,11 +3,14 @@ package com.sora.ecommerce.auth;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "credentials")
 public class UserCredential {
+
+    @Id
     private UUID userId;
     private String username;
     private String hashedPassword;
