@@ -1,8 +1,6 @@
 # TODO
 - [ ] [Setup] CI/CD
 - [ ] [Setup] setup request validation
-- [ ] handle user's credential in user creation
-    - [ ] hash user's password
 
 # DONE
 - [x] [API endpoint] server should be able to do health check
@@ -25,3 +23,5 @@
         - [x] interface
         - [x] impl
     - [x] [Setup] repository for User
+- [x] handle user's credential in user creation
+    - [x] hash user's password
