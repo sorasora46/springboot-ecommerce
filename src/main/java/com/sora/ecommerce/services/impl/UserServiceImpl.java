@@ -10,6 +10,7 @@ import com.sora.ecommerce.auth.UserCredential;
 import com.sora.ecommerce.exceptions.ApiException;
 import com.sora.ecommerce.models.domains.User;
 import com.sora.ecommerce.models.requests.CreateUserPayload;
+import com.sora.ecommerce.models.requests.UpdateUserPayload;
 import com.sora.ecommerce.repositories.UserCredentialRepository;
 import com.sora.ecommerce.repositories.UserRepository;
 import com.sora.ecommerce.services.UserService;
@@ -75,4 +76,21 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+    @Override
+    public void updateUserById(UUID id, UpdateUserPayload payload) {
+        Optional<User> optional = userRepository.findById(id);
+
+        if (optional.isEmpty())
+            throw new ApiException(HttpStatus.NOT_FOUND, "User id: " + id + " not found");
+
+        var user = optional.get();
+        if (payload.getFirstName() != null)
+            user.setFirstName(payload.getFirstName());
+        if (payload.getLastName() != null)
+            user.setLastName(payload.getLastName());
+        if (payload.getEmail() != null)
+            user.setEmail(payload.getEmail());
+
+        userRepository.save(user);
+    }
 }
