@@ -1,10 +1,24 @@
 # TODO
 - [ ] [Setup] CI/CD
+- [ ] [PRODUCT] create product repository
+- [ ] [PRODUCT] implement product service interface
+    - [ ] find by id
+    - [ ] find by name (return multiples)
+    - [ ] find by price range (return multiples)
+    - [ ] delete product by id
+    - [ ] update product by id
+        - [ ] handle update payload
+    - [ ] create product
+        - [ ] handle create payload
 - [ ] [PRODUCT] server should be able to add product
     - [ ] handle create product payload
 - [ ] [PRODUCT] server should be able to remove product
 - [ ] [PRODUCT] server should be able to update product
     - [ ] handle update product payload
+- [ ] [PRODUCT] server should be able to find product(s)
+    - [ ] find by id
+    - [ ] find by name (return multiples)
+    - [ ] find by price range (return multiples)
 
 # DONE
 - [x] [SERVER] server should be able to do health check
@@ -33,3 +47,13 @@
 - [x] [USER] server should be able to delete user by id
 - [x] [USER] server should be able to update user by id
     - [x] handle update payload
+- [x] [PRODUCT] create product object
+- [x] [PRODUCT] create product service (interface)
+    - [x] find by id
+    - [x] find by name (return multiples)
+    - [x] find by price range (return multiples)
+    - [x] delete product by id
+    - [x] update product by id
+        - [x] create update payload obj
+    - [x] create product
+        - [x] create create payload obj
