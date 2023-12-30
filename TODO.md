@@ -1,14 +1,22 @@
 # TODO
 - [ ] [Setup] CI/CD
+- [ ] [USER] server should be able to delete user by id
+- [ ] [USER] server should be able to update user by id
+    - [ ] handle update payload
+- [ ] [PRODUCT] server should be able to add product
+    - [ ] handle create product payload
+- [ ] [PRODUCT] server should be able to remove product
+- [ ] [PRODUCT] server should be able to update product
+    - [ ] handle update product payload
 
 # DONE
-- [x] [API endpoint] server should be able to do health check
+- [x] [SERVER] server should be able to do health check
 - [x] [Setup] set up postgresql database
 - [x] [Setup] response object (common response class)
 - [x] [Setup] setup exception
-- [x] [API endpoint] server should be able to send user information by id
+- [x] [USER] server should be able to send user information by id
     - [x] handle user's id not found
-- [x] [API endpoint] server should have signup endpoint
+- [x] [USER] server should have signup endpoint
     - [x] handle user already exist
     - signup endpoint should accept request body
         - request body should have User domain data:
@@ -23,5 +31,5 @@
         - [x] impl
     - [x] [Setup] repository for User
 - [x] [Setup] setup request validation
-- [x] handle user's credential in user creation
+- [x] [USER] handle user's credential in user creation
     - [x] hash user's password
