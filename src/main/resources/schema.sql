@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS credentials (
-    user_id uuid REFERENCES users(id),
+    user_id uuid REFERENCES users(id) ON DELETE CASCADE,
     username VARCHAR(10) NOT NULL UNIQUE,
     hashed_password VARCHAR(60) NOT NULL
 );
