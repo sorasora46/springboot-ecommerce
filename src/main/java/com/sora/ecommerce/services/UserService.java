@@ -10,4 +10,6 @@ public interface UserService {
     public User getUserById(UUID id);
 
     public UUID createUser(CreateUserPayload payload);
+
+    public void deleteUserById(UUID id);
 }

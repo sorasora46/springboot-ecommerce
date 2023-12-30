@@ -2,7 +2,6 @@ package com.sora.ecommerce.services.impl;
 
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -65,4 +64,15 @@ public class UserServiceImpl implements UserService {
 
         return result.getId();
     }
+
+    @Override
+    public void deleteUserById(UUID id) {
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty())
+            throw new ApiException(HttpStatus.NOT_FOUND, "User id: " + id + " not found");
+
+        userRepository.deleteById(id);
+    }
+
 }
