@@ -1,20 +1,16 @@
 package com.sora.ecommerce.models.requests;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class UpdateUserPayload {
 
-    @NotBlank(message = "first name is required.")
     @Size(min = 2, max = 50, message = "the first name must be from 2 to 50 characters.")
     private String firstName;
 
-    @NotBlank(message = "last name is required.")
     @Size(min = 2, max = 50, message = "the last name must be from 2 to 50 characters.")
     private String lastName;
 
-    @NotBlank(message = "email is required.")
     @Email(message = "email is not a valid email.")
     private String email;
 
