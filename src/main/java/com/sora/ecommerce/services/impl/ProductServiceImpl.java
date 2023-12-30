@@ -48,14 +48,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findProductByName(String name) {
-        // TODO Auto-generated method stub
-        return null;
+        var result = productRepository.findByName(name);
+        return result.get();
     }
 
     @Override
     public List<Product> findProductByPrice(Float min, Float max) {
-        // TODO Auto-generated method stub
-        return null;
+        var result = productRepository.findByPrice(min, max);
+        return result.get();
     }
 
     @Override
