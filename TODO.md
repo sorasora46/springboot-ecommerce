@@ -1,7 +1,5 @@
 # TODO
 - [ ] [Setup] CI/CD
-- [ ] [USER] server should be able to update user by id
-    - [ ] handle update payload
 - [ ] [PRODUCT] server should be able to add product
     - [ ] handle create product payload
 - [ ] [PRODUCT] server should be able to remove product
@@ -33,3 +31,5 @@
 - [x] [USER] handle user's credential in user creation
     - [x] hash user's password
 - [x] [USER] server should be able to delete user by id
+- [x] [USER] server should be able to update user by id
+    - [x] handle update payload
