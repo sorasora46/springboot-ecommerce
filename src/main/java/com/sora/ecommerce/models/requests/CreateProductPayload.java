@@ -25,17 +25,17 @@ public class CreateProductPayload {
     private Integer amount;
 
     @Max(5)
-    private List<String> imagePaths;
+    private List<String> images;
 
     public CreateProductPayload() {
     }
 
-    public CreateProductPayload(String name, String description, Float price, Integer amount, List<String> imagePaths) {
+    public CreateProductPayload(String name, String description, Float price, Integer amount, List<String> images) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.amount = amount;
-        this.imagePaths = imagePaths;
+        this.images = images;
     }
 
     public String getName() {
@@ -70,11 +70,11 @@ public class CreateProductPayload {
         this.amount = amount;
     }
 
-    public List<String> getImagePaths() {
-        return imagePaths;
+    public List<String> getImages() {
+        return images;
     }
 
-    public void setImagePaths(List<String> imagePaths) {
-        this.imagePaths = imagePaths;
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }
