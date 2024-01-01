@@ -2,7 +2,7 @@
 - [ ] [Setup] CI/CD
 - [ ] [PRODUCT] create product repository
 - [ ] [PRODUCT] implement product service interface
-    - [ ] find by id
+    - [x] find by id
     - [ ] find by name (return multiples)
     - [ ] find by price range (return multiples)
     - [ ] delete product by id
