@@ -14,6 +14,7 @@ public class CreateProductPayload {
     @Size(min = 2, max = 50, message = "product's name must be from 2 to 50 characters.")
     private String name;
 
+    @NotBlank(message = "product's description is required.")
     @Size(max = 255, message = "product's description should not exceed 255 characters.")
     private String description;
 
@@ -24,6 +25,7 @@ public class CreateProductPayload {
     @Min(1)
     private Integer amount;
 
+    @NotNull(message = "product's image is required.")
     @Max(5)
     private List<String> images;
 
@@ -76,5 +78,9 @@ public class CreateProductPayload {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public Boolean hasImages() {
+        return images == null || images.isEmpty();
     }
 }
