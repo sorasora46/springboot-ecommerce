@@ -1,5 +1,7 @@
 package com.sora.ecommerce.models.domains;
 
+import com.sora.ecommerce.models.requests.CreateProductPayload;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,13 @@ public class Product {
     private String imagePaths;
 
     public Product() {
+    }
+
+    public Product(CreateProductPayload payload) {
+        name = payload.getName();
+        description = payload.getDescription();
+        price = payload.getPrice();
+        amount = payload.getAmount();
     }
 
     public Product(String name, String description, Float price, Integer amount, String imagePaths) {
