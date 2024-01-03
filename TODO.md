@@ -1,5 +1,6 @@
 # TODO
 - [ ] [Setup] CI/CD
+- [ ] [AUTHENTICATION] implement authentication
 - [ ] [PRODUCT] implement product service interface
     - [x] find by id
     - [x] find by name (return multiples)
