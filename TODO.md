@@ -1,18 +1,10 @@
 # TODO
 - [ ] [Setup] CI/CD
 - [ ] [AUTHENTICATION] implement authentication
-- [ ] [PRODUCT] implement product service interface
-    - [x] find by id
-    - [x] find by name (return multiples)
-    - [x] find by price range (return multiples)
-    - [x] delete product by id
-    - [ ] update product by id
-        - [x] handle update payload
-    - [ ] create product
-        - [x] handle create payload
-- [ ] [PRODUCT] server should be able to add product
+- [ ] [Setup] setup docker volumes for storing product's images
+- [ ] [PRODUCT] [IMPLEMENTATION] server should be able to add product
     - [ ] handle create product payload
-- [ ] [PRODUCT] server should be able to update product
+- [ ] [PRODUCT] [IMPLEMENTATION] server should be able to update product
     - [ ] handle update product payload
 
 # DONE
@@ -58,3 +50,12 @@
     - [x] find by id
     - [x] find by name (return multiples)
     - [x] find by price range (return multiples)
+- [x] [PRODUCT] implement product service interface
+    - [x] find by id
+    - [x] find by name (return multiples)
+    - [x] find by price range (return multiples)
+    - [x] delete product by id
+    - [x] update product by id
+        - [x] handle update payload
+    - [x] create product
+        - [x] handle create payload
