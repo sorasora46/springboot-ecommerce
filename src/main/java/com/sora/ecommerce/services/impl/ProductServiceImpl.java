@@ -22,12 +22,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Integer createProduct(CreateProductPayload payload) {
-        // TODO Auto-generated method stub
+        List<String> images = payload.getImages();
         return null;
     }
 
     @Override
     public void deleteProductById(Integer id) {
+        if (id == null)
+            throw new IllegalArgumentException("Product id cannot be null");
+
         Optional<Product> optional = productRepository.findById(id);
 
         if (optional.isEmpty())
@@ -38,6 +41,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findProductById(Integer id) {
+        if (id == null)
+            throw new IllegalArgumentException("Product id cannot be null");
+
         Optional<Product> optional = productRepository.findById(id);
 
         if (optional.isEmpty())
@@ -60,6 +66,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void updateProductById(Integer id, UpdateProductPayload payload) {
+        if (id == null)
+            throw new IllegalArgumentException("Product id cannot be null");
+
         Optional<Product> optional = productRepository.findById(id);
 
         if (optional.isEmpty())

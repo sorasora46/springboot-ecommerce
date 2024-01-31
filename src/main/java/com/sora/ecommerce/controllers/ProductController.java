@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sora.ecommerce.annotations.ValidId;
 import com.sora.ecommerce.constants.ResponseStatus;
 import com.sora.ecommerce.response.ResponseHandler;
 import com.sora.ecommerce.services.ProductService;
@@ -35,13 +36,13 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> findProductById(@PathVariable Integer id) {
+    public ResponseEntity<Object> findProductById(@PathVariable @ValidId Integer id) {
         var result = productService.findProductById(id);
         return ResponseHandler.responseBuilder(HttpStatus.OK, ResponseStatus.SUCCESS, result);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteProductById(@PathVariable Integer id) {
+    public ResponseEntity<Object> deleteProductById(@PathVariable @ValidId Integer id) {
         productService.deleteProductById(id);
         return ResponseHandler.responseBuilder(HttpStatus.OK, ResponseStatus.SUCCESS, null);
     }
