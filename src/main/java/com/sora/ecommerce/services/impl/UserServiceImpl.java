@@ -31,6 +31,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(UUID id) {
+        if (id == null)
+            throw new IllegalArgumentException("User id cannot be null");
+
         Optional<User> user = userRepository.findById(id);
 
         if (user.isEmpty())
@@ -68,6 +71,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(UUID id) {
+        if (id == null)
+            throw new IllegalArgumentException("User id cannot be null");
+
         Optional<User> user = userRepository.findById(id);
 
         if (user.isEmpty())
@@ -78,12 +84,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserById(UUID id, UpdateUserPayload payload) {
+        if (id == null)
+            throw new IllegalArgumentException("User id cannot be null");
+
         Optional<User> optional = userRepository.findById(id);
 
         if (optional.isEmpty())
             throw new ApiException(HttpStatus.NOT_FOUND, "User id: " + id + " not found");
 
         var user = optional.get();
+        if (user == null)
+            throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "user object is null");
+
         if (payload.getFirstName() != null)
             user.setFirstName(payload.getFirstName());
         if (payload.getLastName() != null)

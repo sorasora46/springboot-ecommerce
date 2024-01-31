@@ -3,6 +3,7 @@ package com.sora.ecommerce.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sora.ecommerce.annotations.ValidId;
 import com.sora.ecommerce.constants.ResponseStatus;
 import com.sora.ecommerce.models.domains.User;
 import com.sora.ecommerce.models.requests.CreateUserPayload;
@@ -32,7 +33,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getUserById(@PathVariable UUID id) {
+    public ResponseEntity<Object> getUserById(@PathVariable @ValidId UUID id) {
         User user = userService.getUserById(id);
         return ResponseHandler.responseBuilder(HttpStatus.OK, ResponseStatus.SUCCESS, user);
     }
@@ -44,13 +45,14 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}/delete")
-    public ResponseEntity<Object> deleteUserById(@PathVariable UUID id) {
+    public ResponseEntity<Object> deleteUserById(@PathVariable @ValidId UUID id) {
         userService.deleteUserById(id);
         return ResponseHandler.responseBuilder(HttpStatus.OK, ResponseStatus.SUCCESS, null);
     }
 
     @PatchMapping("/{id}/update")
-    public ResponseEntity<Object> updateUserById(@PathVariable UUID id, @Valid @RequestBody UpdateUserPayload payload) {
+    public ResponseEntity<Object> updateUserById(@PathVariable @ValidId UUID id,
+            @Valid @RequestBody UpdateUserPayload payload) {
         userService.updateUserById(id, payload);
         return ResponseHandler.responseBuilder(HttpStatus.OK, ResponseStatus.SUCCESS, null);
     }
