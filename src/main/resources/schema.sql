@@ -15,10 +15,10 @@ CREATE TABLE IF NOT EXISTS credentials (
 );
 
 CREATE TABLE IF NOT EXISTS products (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description VARCHAR(255) NOT NULL,
     price NUMERIC(2) NOT NULL,
     amount INTEGER NOT NULL,
-    image_paths VARCHAR(255) NOT NULL
+    image_paths VARCHAR(255)
 );
