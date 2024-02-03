@@ -1,7 +1,6 @@
 # TODO
 - [ ] [Setup] CI/CD
 - [ ] [AUTHENTICATION] implement authentication
-- [ ] [Setup] setup docker volumes for storing product's images
 - [ ] [PRODUCT] [IMPLEMENTATION] server should be able to add product
     - [ ] handle create product payload
 - [ ] [PRODUCT] [IMPLEMENTATION] server should be able to update product
@@ -59,3 +58,4 @@
         - [x] handle update payload
     - [x] create product
         - [x] handle create payload
+- [x] [Setup] setup docker volumes for storing product's images
