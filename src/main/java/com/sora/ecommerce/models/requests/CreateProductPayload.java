@@ -26,7 +26,7 @@ public class CreateProductPayload {
     private Integer amount;
 
     @NotNull(message = "product's image is required.")
-    @Max(5)
+    @Size(max = 5, message = "product's images should not exceed 5.")
     private List<String> images;
 
     public CreateProductPayload() {
