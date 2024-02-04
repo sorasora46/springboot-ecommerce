@@ -30,6 +30,44 @@ public class ProductServiceImpl implements ProductService {
     private String imageStoragePath;
 
     @Override
+    public List<Product> findProductByName(String name) {
+        var result = productRepository.findByName(name);
+        return result.get();
+    }
+
+    @Override
+    public List<Product> findProductByPrice(Float min, Float max) {
+        var result = productRepository.findByPrice(min, max);
+        return result.get();
+    }
+
+    @Override
+    public Product findProductById(Integer id) {
+        if (id == null)
+            throw new IllegalArgumentException("Product id cannot be null");
+
+        Optional<Product> optional = productRepository.findById(id);
+
+        if (optional.isEmpty())
+            throw new ApiException(HttpStatus.NOT_FOUND, "Product id: " + id + " not found");
+
+        return optional.get();
+    }
+
+    @Override
+    public void deleteProductById(Integer id) {
+        if (id == null)
+            throw new IllegalArgumentException("Product id cannot be null");
+
+        Optional<Product> optional = productRepository.findById(id);
+
+        if (optional.isEmpty())
+            throw new ApiException(HttpStatus.NOT_FOUND, "Product id: " + id + " not found");
+
+        productRepository.deleteById(id);
+    }
+
+    @Override
     public Integer createProduct(CreateProductPayload payload, MultipartFile[] images) {
         try {
             var newProduct = new Product(payload);
@@ -52,44 +90,6 @@ public class ProductServiceImpl implements ProductService {
         } catch (Exception e) {
             throw new ApiException(e.getLocalizedMessage());
         }
-    }
-
-    @Override
-    public void deleteProductById(Integer id) {
-        if (id == null)
-            throw new IllegalArgumentException("Product id cannot be null");
-
-        Optional<Product> optional = productRepository.findById(id);
-
-        if (optional.isEmpty())
-            throw new ApiException(HttpStatus.NOT_FOUND, "Product id: " + id + " not found");
-
-        productRepository.deleteById(id);
-    }
-
-    @Override
-    public Product findProductById(Integer id) {
-        if (id == null)
-            throw new IllegalArgumentException("Product id cannot be null");
-
-        Optional<Product> optional = productRepository.findById(id);
-
-        if (optional.isEmpty())
-            throw new ApiException(HttpStatus.NOT_FOUND, "Product id: " + id + " not found");
-
-        return optional.get();
-    }
-
-    @Override
-    public List<Product> findProductByName(String name) {
-        var result = productRepository.findByName(name);
-        return result.get();
-    }
-
-    @Override
-    public List<Product> findProductByPrice(Float min, Float max) {
-        var result = productRepository.findByPrice(min, max);
-        return result.get();
     }
 
     @Override
