@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +27,9 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Value("${image.storage.path}")
+    private String imageStoragePath;
+
     @Override
     public Integer createProduct(CreateProductPayload payload, MultipartFile[] images) {
         try {
@@ -38,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
             for (int i = 0; i < images.length; i++) {
                 String fileName = productId + "-" + i + "-" + images[i].getOriginalFilename();
                 imagePaths += fileName + ":";
-                Path destination = Paths.get("/home/sora/Desktop", fileName);
+                Path destination = Paths.get(imageStoragePath, fileName);
                 Files.copy(images[i].getInputStream(), destination, StandardCopyOption.REPLACE_EXISTING);
             }
 
