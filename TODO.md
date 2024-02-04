@@ -1,10 +1,10 @@
 # TODO
 - [ ] [Setup] CI/CD
 - [ ] [AUTHENTICATION] implement authentication
-- [ ] [PRODUCT] [IMPLEMENTATION] server should be able to add product
-    - [ ] handle create product payload
 - [ ] [PRODUCT] [IMPLEMENTATION] server should be able to update product
     - [ ] handle update product payload
+- [ ] [PRODUCT] All GET product endpoints should return images too
+- [ ] [PRODUCT] DELETE product endpoint should delete images when product got delete
 
 # DONE
 - [x] [SERVER] server should be able to do health check
@@ -59,3 +59,5 @@
     - [x] create product
         - [x] handle create payload
 - [x] [Setup] setup docker volumes for storing product's images
+- [x] [PRODUCT] [IMPLEMENTATION] server should be able to add product
+    - [x] handle create product payload
