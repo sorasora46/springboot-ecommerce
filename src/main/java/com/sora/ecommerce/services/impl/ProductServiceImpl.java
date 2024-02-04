@@ -1,9 +1,5 @@
 package com.sora.ecommerce.services.impl;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,26 +28,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findProductByName(String name) {
         var result = productRepository.findByName(name);
-        var products = result.get();
-
-        /*
-         * NOTE:
-         * - performance issue?
-         * - this looks like a huge response
-         * - maybe send reconsidering stand-alone image storage server?
-         * TODO:
-         * - Change return type
-         * - Find a way to get a file from disk
-         * - POC response performance
-         * STEPS:
-         * - split the file paths
-         * - run a loop to file each file
-         * - store each file in array
-         * - maybe encrypt/decrypt file bytestream into ready-to-send format
-         * - save file to return object
-         * - return the result
-         */
-
         return result.get();
     }
 
@@ -89,27 +65,26 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Integer createProduct(CreateProductPayload payload, MultipartFile[] images) {
-        try {
-            var newProduct = new Product(payload);
-            var savedProduct = productRepository.save(newProduct);
-            Integer productId = savedProduct.getId();
+        var newProduct = new Product(payload);
+        var savedProduct = productRepository.save(newProduct);
+        Integer productId = savedProduct.getId();
 
-            String imagePaths = "";
+        String imagePaths = "";
 
-            for (int i = 0; i < images.length; i++) {
-                String fileName = productId + "-" + i + "-" + images[i].getOriginalFilename();
-                imagePaths += fileName + ":";
-                Path destination = Paths.get(imageStoragePath, fileName);
-                Files.copy(images[i].getInputStream(), destination, StandardCopyOption.REPLACE_EXISTING);
-            }
+        for (int i = 0; i < images.length; i++) {
+            String fileName = productId + "-" + i + "-" + images[i].getOriginalFilename();
+            imagePaths += fileName + ":";
 
-            savedProduct.setImagePaths(imagePaths);
-            productRepository.save(savedProduct);
-
-            return productId;
-        } catch (Exception e) {
-            throw new ApiException(e.getLocalizedMessage());
+            /*
+             * TODO:
+             * - implement saving image logics
+             */
         }
+
+        savedProduct.setImagePaths(imagePaths);
+        productRepository.save(savedProduct);
+
+        return productId;
     }
 
     @Override
