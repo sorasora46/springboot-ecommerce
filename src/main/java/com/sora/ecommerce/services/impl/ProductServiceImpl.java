@@ -32,6 +32,26 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findProductByName(String name) {
         var result = productRepository.findByName(name);
+        var products = result.get();
+
+        /*
+         * NOTE:
+         * - performance issue?
+         * - this looks like a huge response
+         * - maybe send reconsidering stand-alone image storage server?
+         * TODO:
+         * - Change return type
+         * - Find a way to get a file from disk
+         * - POC response performance
+         * STEPS:
+         * - split the file paths
+         * - run a loop to file each file
+         * - store each file in array
+         * - maybe encrypt/decrypt file bytestream into ready-to-send format
+         * - save file to return object
+         * - return the result
+         */
+
         return result.get();
     }
 
