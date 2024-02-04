@@ -1,8 +1,5 @@
 package com.sora.ecommerce.models.requests;
 
-import java.util.List;
-
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,19 +22,14 @@ public class CreateProductPayload {
     @Min(1)
     private Integer amount;
 
-    @NotNull(message = "product's image is required.")
-    @Size(max = 5, message = "product's images should not exceed 5.")
-    private List<String> images;
-
     public CreateProductPayload() {
     }
 
-    public CreateProductPayload(String name, String description, Float price, Integer amount, List<String> images) {
+    public CreateProductPayload(String name, String description, Float price, Integer amount) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.amount = amount;
-        this.images = images;
     }
 
     public String getName() {
@@ -70,17 +62,5 @@ public class CreateProductPayload {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
-    }
-
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
-
-    public Boolean hasImages() {
-        return images == null || images.isEmpty();
     }
 }
