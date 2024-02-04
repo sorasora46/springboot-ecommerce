@@ -1,11 +1,17 @@
 package com.sora.ecommerce.services.impl;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sora.ecommerce.exceptions.ApiException;
 import com.sora.ecommerce.models.domains.Product;
@@ -21,9 +27,28 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public Integer createProduct(CreateProductPayload payload) {
-        List<String> images = payload.getImages();
-        return null;
+    public Integer createProduct(CreateProductPayload payload, MultipartFile[] images) {
+        try {
+            var newProduct = new Product(payload);
+            var savedProduct = productRepository.save(newProduct);
+            Integer productId = savedProduct.getId();
+
+            String imagePaths = "";
+
+            for (int i = 0; i < images.length; i++) {
+                String fileName = productId + "-" + i + "-" + images[i].getOriginalFilename();
+                imagePaths += fileName + ":";
+                Path destination = Paths.get("/home/sora/Desktop", fileName);
+                Files.copy(images[i].getInputStream(), destination, StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            savedProduct.setImagePaths(imagePaths);
+            productRepository.save(savedProduct);
+
+            return productId;
+        } catch (Exception e) {
+            throw new ApiException(e.getLocalizedMessage());
+        }
     }
 
     @Override

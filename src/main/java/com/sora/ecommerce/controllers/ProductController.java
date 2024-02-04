@@ -2,7 +2,9 @@ package com.sora.ecommerce.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sora.ecommerce.annotations.ValidId;
 import com.sora.ecommerce.constants.ResponseStatus;
@@ -19,7 +21,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api/v1/product")
@@ -53,9 +54,10 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Object> createProduct(@Valid @RequestBody CreateProductPayload payload) {
-        Integer id = productService.createProduct(payload);
-        return ResponseHandler.responseBuilder(HttpStatus.OK, true, id);
+    public ResponseEntity<Object> createProduct(@Valid @RequestPart("details") CreateProductPayload payload,
+            @RequestPart("files") MultipartFile[] files) {
+        Integer result = productService.createProduct(payload, files);
+        return ResponseHandler.responseBuilder(HttpStatus.CREATED, ResponseStatus.SUCCESS, result);
     }
 
 }
