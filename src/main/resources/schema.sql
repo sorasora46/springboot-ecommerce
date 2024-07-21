@@ -1,0 +1,15 @@
+DROP TABLE IF EXISTS users;
+CREATE TABLE IF NOT EXISTS users (
+    id           VARCHAR(255) DEFAULT (UUID()) NOT NULL,
+    username     VARCHAR(255) UNIQUE NOT NULL,
+    first_name   VARCHAR(255) NOT NULL,
+    last_name    VARCHAR(255) NOT NULL,
+    email        VARCHAR(255) UNIQUE NOT NULL,
+    phone_no     VARCHAR(15)  UNIQUE NOT NULL,
+    birth_date   DATETIME     NOT NULL,
+    role         VARCHAR(10)  NOT NULL,
+    created_date TIMESTAMP    DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_date TIMESTAMP    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+
+    PRIMARY KEY (id)
+);
