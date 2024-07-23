@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -34,7 +34,7 @@ public class User {
     private String phoneNo;
 
     @Column(name = "birth_date", nullable = false)
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @Column(name = "role", nullable = false, length = 10)
     private String role;
