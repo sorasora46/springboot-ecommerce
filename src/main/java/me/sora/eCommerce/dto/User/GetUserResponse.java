@@ -1,4 +1,4 @@
-package me.sora.eCommerce.dto.user;
+package me.sora.eCommerce.dto.User;
 
 import lombok.Builder;
 import lombok.Data;
