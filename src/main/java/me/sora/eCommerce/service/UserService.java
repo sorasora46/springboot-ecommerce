@@ -1,8 +1,8 @@
-package me.sora.eCommerce.services;
+package me.sora.eCommerce.service;
 
 import lombok.RequiredArgsConstructor;
-import me.sora.eCommerce.entities.User;
-import me.sora.eCommerce.repositories.UserRepository;
+import me.sora.eCommerce.entity.User;
+import me.sora.eCommerce.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service

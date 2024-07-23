@@ -1,8 +1,8 @@
-package me.sora.eCommerce.controllers;
+package me.sora.eCommerce.controller;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
-import me.sora.eCommerce.services.UserService;
+import me.sora.eCommerce.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

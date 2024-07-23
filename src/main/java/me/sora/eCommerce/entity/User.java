@@ -1,4 +1,4 @@
-package me.sora.eCommerce.entities;
+package me.sora.eCommerce.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

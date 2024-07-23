@@ -1,6 +1,6 @@
-package me.sora.eCommerce.repositories;
+package me.sora.eCommerce.repository;
 
-import me.sora.eCommerce.entities.User;
+import me.sora.eCommerce.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
