@@ -1,7 +1,8 @@
 package me.sora.eCommerce.service;
 
 import lombok.RequiredArgsConstructor;
-import me.sora.eCommerce.entity.User;
+import me.sora.eCommerce.dto.User.GetUserResponse;
+import me.sora.eCommerce.mapper.User.UserMapper;
 import me.sora.eCommerce.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +11,16 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    public User getUserById(String id) {
-        return userRepository.findById(id).orElse(null);
+    public GetUserResponse getUserById(String id) {
+        var user = userRepository.findById(id).orElse(null);
+        return userMapper.fromUserEntityToGetUserResponse(user);
     }
 
-    public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username).orElse(null);
+    public GetUserResponse getUserByUsername(String username) {
+        var user = userRepository.findByUsername(username).orElse(null);
+        return userMapper.fromUserEntityToGetUserResponse(user);
     }
 
 }
