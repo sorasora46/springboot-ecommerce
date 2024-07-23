@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
+    private UserRepository userRepository;
+    private UserMapper userMapper;
 
     public GetUserResponse getUserById(String id) {
         var user = userRepository.findById(id).orElse(null);

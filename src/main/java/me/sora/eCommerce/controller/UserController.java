@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private UserService userService;
 
     @GetMapping("/{id}")
     public ResponseEntity<GetUserResponse> getUserById(@NotEmpty @PathVariable String id) {
