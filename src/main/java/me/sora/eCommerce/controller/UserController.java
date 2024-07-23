@@ -2,6 +2,7 @@ package me.sora.eCommerce.controller;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
+import me.sora.eCommerce.dto.User.GetUserResponse;
 import me.sora.eCommerce.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,13 +18,15 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getUserById(@NotEmpty @PathVariable String id) {
-        return ResponseEntity.ok().body(userService.getUserById(id));
+    public ResponseEntity<GetUserResponse> getUserById(@NotEmpty @PathVariable String id) {
+        var response = userService.getUserById(id);
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/username/{username}")
-    public ResponseEntity<Object> getUserByUsername(@NotEmpty @PathVariable String username) {
-        return ResponseEntity.ok().body(userService.getUserByUsername(username));
+    public ResponseEntity<GetUserResponse> getUserByUsername(@NotEmpty @PathVariable String username) {
+        var response = userService.getUserByUsername(username);
+        return ResponseEntity.ok().body(response);
     }
 
 }
