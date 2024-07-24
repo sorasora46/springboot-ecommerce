@@ -12,4 +12,6 @@ public interface UserMapper {
 
     GetUserResponse fromUserEntityToGetUserResponse(User user);
 
+    User fromCreateUserRequestToUser(CreateUserRequest createUserRequest);
+
 }
