@@ -1,14 +1,12 @@
 package me.sora.eCommerce.controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import me.sora.eCommerce.dto.User.GetUserResponse;
 import me.sora.eCommerce.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -16,6 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private UserService userService;
+
+    @PostMapping()
+    public Object createUser(@Valid @RequestBody Object request) {
+        return null;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<GetUserResponse> getUserById(@NotEmpty @PathVariable String id) {
