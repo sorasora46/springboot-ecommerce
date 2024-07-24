@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.Instant;
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@ToString
 @RequiredArgsConstructor
 @Entity(name = "users")
 public class User {
