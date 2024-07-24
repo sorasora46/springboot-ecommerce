@@ -44,4 +44,17 @@ public class User {
 
     @Column(name = "updated_date")
     private Instant updatedDate;
+
+    @PrePersist
+    protected void onCreate() {
+        var now = Instant.now();
+        createdDate = now;
+        updatedDate = now;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedDate = Instant.now();
+    }
+
 }
