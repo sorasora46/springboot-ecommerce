@@ -65,5 +65,4 @@ public class AuthenticationService {
         return AuthenticationMapper.INSTANCE.fromEntityToRegisterResponse(token, savedUser);
     }
 
-
 }
