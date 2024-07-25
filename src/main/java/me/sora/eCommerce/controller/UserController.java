@@ -19,7 +19,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping()
-    public Object createUser(@Valid @RequestBody CreateUserRequest request) {
+    public ResponseEntity<GetUserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
         var newUser = userService.createUser(request);
         return ResponseEntity.created(URI.create(newUser.getId())).body(newUser);
     }
