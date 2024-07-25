@@ -1,4 +1,4 @@
-package me.sora.eCommerce.dto.User;
+package me.sora.eCommerce.dto.Authentication;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-public class CreateUserRequest {
+public class RegisterRequest {
     private String username;
     private String password;
     private String firstName;
