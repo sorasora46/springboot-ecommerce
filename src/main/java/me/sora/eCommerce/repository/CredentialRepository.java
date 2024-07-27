@@ -5,10 +5,12 @@ import me.sora.eCommerce.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 
+@Repository
 public interface CredentialRepository extends JpaRepository<Credential, String> {
 
     @Query(value = "SELECT c.salt FROM credentials c WHERE c.user = :user")
