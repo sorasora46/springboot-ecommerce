@@ -7,7 +7,7 @@ import me.sora.eCommerce.dto.Authentication.AuthenticationResponse;
 import me.sora.eCommerce.dto.Authentication.RegisterRequest;
 import me.sora.eCommerce.dto.Authentication.RegisterResponse;
 import me.sora.eCommerce.entity.Credential;
-import me.sora.eCommerce.mapper.Authentication.AuthenticationMapper;
+import me.sora.eCommerce.mapper.AuthenticationMapper;
 import me.sora.eCommerce.repository.CredentialRepository;
 import me.sora.eCommerce.repository.UserRepository;
 import me.sora.eCommerce.util.AuthUtils;

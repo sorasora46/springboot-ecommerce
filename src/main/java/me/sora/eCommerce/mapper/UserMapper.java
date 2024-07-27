@@ -1,4 +1,4 @@
-package me.sora.eCommerce.mapper.User;
+package me.sora.eCommerce.mapper;
 
 import me.sora.eCommerce.dto.User.GetUserResponse;
 import me.sora.eCommerce.entity.User;

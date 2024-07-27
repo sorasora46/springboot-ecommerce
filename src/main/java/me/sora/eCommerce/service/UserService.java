@@ -2,7 +2,7 @@ package me.sora.eCommerce.service;
 
 import lombok.RequiredArgsConstructor;
 import me.sora.eCommerce.dto.User.GetUserResponse;
-import me.sora.eCommerce.mapper.User.UserMapper;
+import me.sora.eCommerce.mapper.UserMapper;
 import me.sora.eCommerce.repository.UserRepository;
 import org.springframework.stereotype.Service;
 

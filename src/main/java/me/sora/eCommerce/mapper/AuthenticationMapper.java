@@ -1,4 +1,4 @@
-package me.sora.eCommerce.mapper.Authentication;
+package me.sora.eCommerce.mapper;
 
 import me.sora.eCommerce.dto.Authentication.RegisterRequest;
 import me.sora.eCommerce.dto.Authentication.RegisterResponse;
