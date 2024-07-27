@@ -1,6 +1,8 @@
 package me.sora.eCommerce.service;
 
 import lombok.RequiredArgsConstructor;
+import me.sora.eCommerce.dto.Product.GetProductResponse;
+import me.sora.eCommerce.mapper.ProductMapper;
 import me.sora.eCommerce.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +12,9 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public Object getProductById(String id) {
+    public GetProductResponse getProductById(String id) {
         var product = productRepository.findById(id).orElse(null);
-        return product;
+        return ProductMapper.INSTANCE.fromProductEntityToGetProductResponse(product);
     }
 
 }
