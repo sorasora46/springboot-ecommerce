@@ -2,11 +2,13 @@ package me.sora.eCommerce.controller.advice;
 
 import me.sora.eCommerce.dto.CommonResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import static me.sora.eCommerce.constant.ApiConstant.ApiStatus.FAILED;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -16,4 +18,17 @@ public class GlobalExceptionHandler {
         var response = CommonResponse.of(FAILED, ex.getMessage());
         return new ResponseEntity<>(response, INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<CommonResponse<String>> handleAuthenticationException(AuthenticationException ex) {
+        var response = CommonResponse.of(FAILED, ex.getMessage());
+        return new ResponseEntity<>(response, UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<CommonResponse<String>> handleCustomException(CustomException ex) {
+        var response = CommonResponse.of(FAILED, ex.getMessage());
+        return new ResponseEntity<>(response, ex.getHttpStatus());
+    }
+
 }
