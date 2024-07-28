@@ -2,7 +2,9 @@ package me.sora.eCommerce.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.sora.eCommerce.config.AuthenticationFilter;
+import me.sora.eCommerce.constant.ErrorConstant;
 import me.sora.eCommerce.controller.ProductController;
+import me.sora.eCommerce.controller.advice.CustomException;
 import me.sora.eCommerce.entity.Product;
 import me.sora.eCommerce.mapper.ProductMapper;
 import me.sora.eCommerce.service.ProductService;
@@ -15,12 +17,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.Instant;
 
+import static me.sora.eCommerce.constant.ApiConstant.ApiStatus.FAILED;
 import static me.sora.eCommerce.constant.ApiConstant.ApiStatus.SUCCESS;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -71,6 +75,28 @@ public class ProductControllerTest {
                 .andExpect(MockMvcResultMatchers
                         .jsonPath("$.result.price")
                         .value(expectedResponse.getPrice()));
+    }
+
+    @Test
+    void givenRequest_whenGetProductById_thenReturnDataNotFoundException() throws Exception {
+        // Given
+
+        // When
+        when(productService.getProductById(anyString()))
+                .thenThrow(new CustomException(ErrorConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND));
+
+        // Then
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/v1/products/{id}", "not found id")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content().contentType(APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.success")
+                        .value(FAILED))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.result")
+                        .value(ErrorConstant.DATA_NOT_FOUND));
     }
 
 }
