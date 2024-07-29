@@ -85,4 +85,10 @@ public class AuthUtils {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
+    public static boolean hasAdminPermission(UserDetails userDetails) {
+        StringBuilder roles = new StringBuilder();
+        userDetails.getAuthorities().forEach(authority -> roles.append(authority.getAuthority()).append(" "));
+        return AuthConstant.Role.ADMIN.toString().contentEquals(roles);
+    }
+
 }
