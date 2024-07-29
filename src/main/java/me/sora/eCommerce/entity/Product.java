@@ -25,11 +25,20 @@ public class Product {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "amount", nullable = false)
+    private int amount;
+
     @Column(name = "price", nullable = false)
     private double price;
 
+    @Column(name = "created_by", nullable = false)
+    private String createdBy;
+
     @Column(name = "created_date", nullable = false, updatable = false)
     private Instant createdDate;
+
+    @Column(name = "updated_by", nullable = false)
+    private String updatedBy;
 
     @Column(name = "updated_date", nullable = false)
     private Instant updatedDate;

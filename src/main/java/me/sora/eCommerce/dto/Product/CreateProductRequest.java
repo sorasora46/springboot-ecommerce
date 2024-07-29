@@ -8,5 +8,6 @@ import lombok.Data;
 public class CreateProductRequest {
     private String name;
     private String description;
+    private int amount;
     private double price;
 }
