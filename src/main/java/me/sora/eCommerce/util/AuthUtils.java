@@ -86,9 +86,8 @@ public class AuthUtils {
     }
 
     public static boolean hasAdminPermission(UserDetails userDetails) {
-        StringBuilder roles = new StringBuilder();
-        userDetails.getAuthorities().forEach(authority -> roles.append(authority.getAuthority()).append(" "));
-        return AuthConstant.Role.ADMIN.toString().contentEquals(roles);
+        var roles = userDetails.getAuthorities().stream().toList();
+        return AuthConstant.Role.ADMIN.name().equals(roles.get(0).toString());
     }
 
 }
