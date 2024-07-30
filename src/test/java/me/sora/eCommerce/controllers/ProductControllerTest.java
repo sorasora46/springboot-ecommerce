@@ -5,6 +5,8 @@ import me.sora.eCommerce.config.AuthenticationFilter;
 import me.sora.eCommerce.constant.ErrorConstant;
 import me.sora.eCommerce.controller.ProductController;
 import me.sora.eCommerce.controller.advice.CustomException;
+import me.sora.eCommerce.dto.Product.CreateProductRequest;
+import me.sora.eCommerce.dto.Product.CreateProductResponse;
 import me.sora.eCommerce.entity.Product;
 import me.sora.eCommerce.mapper.ProductMapper;
 import me.sora.eCommerce.service.ProductService;
@@ -18,6 +20,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -26,6 +29,7 @@ import java.time.Instant;
 
 import static me.sora.eCommerce.constant.ApiConstant.ApiStatus.FAILED;
 import static me.sora.eCommerce.constant.ApiConstant.ApiStatus.SUCCESS;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -97,6 +101,75 @@ public class ProductControllerTest {
                 .andExpect(MockMvcResultMatchers
                         .jsonPath("$.result")
                         .value(ErrorConstant.DATA_NOT_FOUND));
+    }
+
+    @Test
+    @WithMockUser(authorities = {"ADMIN"})
+    void givenRequest_whenCreateProduct_thenReturnSuccess() throws Exception {
+        // Given
+        var request = CreateProductRequest.builder()
+                .name("name")
+                .description("description")
+                .amount(50)
+                .price(100.00)
+                .build();
+
+        var now = Instant.now();
+        var response = CreateProductResponse.builder()
+                .id("id")
+                .createdDate(now)
+                .build();
+
+        // When
+        when(productService.createProduct(any(CreateProductRequest.class), anyString())).thenReturn(response);
+
+        // Then
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/v1/products")
+                        .content(objectMapper.writeValueAsString(request))
+                        .contentType(APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content().contentType(APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.success")
+                        .value(SUCCESS))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.result.id")
+                        .value(response.getId()))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.result.createdDate")
+                        .value(now.toString()));
+    }
+
+    @Test
+    @WithMockUser(authorities = {"USER"})
+    void givenRequest_whenCreateProduct_thenPermissionDenied() throws Exception {
+        // Given
+        var request = CreateProductRequest.builder()
+                .name("name")
+                .description("description")
+                .amount(50)
+                .price(100.00)
+                .build();
+
+        // When
+        when(productService
+                .createProduct(any(CreateProductRequest.class), anyString()))
+                .thenThrow(new CustomException(ErrorConstant.PERMISSION_NOT_ALLOW, HttpStatus.UNAUTHORIZED));
+
+        // Then
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/v1/products")
+                        .content(objectMapper.writeValueAsString(request))
+                        .contentType(APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content().contentType(APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized())
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.success")
+                        .value(FAILED))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.result")
+                        .value(ErrorConstant.PERMISSION_NOT_ALLOW));
     }
 
 }
