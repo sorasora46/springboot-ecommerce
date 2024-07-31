@@ -1,15 +1,11 @@
-package me.sora.eCommerce.controllers;
+package me.sora.eCommerce.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.sora.eCommerce.config.AuthenticationFilter;
-import me.sora.eCommerce.constant.AuthConstant;
 import me.sora.eCommerce.constant.ErrorConstant;
-import me.sora.eCommerce.controller.UserController;
 import me.sora.eCommerce.controller.advice.CustomException;
 import me.sora.eCommerce.entity.Credential;
-import me.sora.eCommerce.entity.Product;
 import me.sora.eCommerce.entity.User;
-import me.sora.eCommerce.mapper.ProductMapper;
 import me.sora.eCommerce.mapper.UserMapper;
 import me.sora.eCommerce.service.UserService;
 import org.junit.jupiter.api.Test;

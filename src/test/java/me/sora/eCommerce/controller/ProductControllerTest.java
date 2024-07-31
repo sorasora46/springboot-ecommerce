@@ -1,9 +1,8 @@
-package me.sora.eCommerce.controllers;
+package me.sora.eCommerce.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.sora.eCommerce.config.AuthenticationFilter;
 import me.sora.eCommerce.constant.ErrorConstant;
-import me.sora.eCommerce.controller.ProductController;
 import me.sora.eCommerce.controller.advice.CustomException;
 import me.sora.eCommerce.dto.Product.CreateProductRequest;
 import me.sora.eCommerce.dto.Product.CreateProductResponse;
