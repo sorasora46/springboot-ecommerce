@@ -4,13 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.time.Instant;
+import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 @Entity(name = "products")
 public class Product {
@@ -44,6 +43,9 @@ public class Product {
 
     @Column(name = "updated_date", nullable = false)
     private Instant updatedDate;
+
+    @OneToMany(mappedBy = "product")
+    private Set<CartItem> cartItems;
 
     @PrePersist
     protected void onCreate() {
