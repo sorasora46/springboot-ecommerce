@@ -1,6 +1,7 @@
 # User Stories
 - User
   - a user shall be able to register to the system
+  - a user must have registered account
   - a user shall be able to logged in to the system with registered account
   - a user shall have a role of "USER"
   - a user shall be able to refresh token when access token is expired
