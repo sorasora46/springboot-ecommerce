@@ -1,4 +1,4 @@
-package me.sora.eCommerce.dto.Validation;
+package me.sora.eCommerce.controller.advice;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,7 +1,6 @@
 package me.sora.eCommerce.controller.advice;
 
 import me.sora.eCommerce.dto.CommonResponse;
-import me.sora.eCommerce.dto.Validation.ValidationErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
