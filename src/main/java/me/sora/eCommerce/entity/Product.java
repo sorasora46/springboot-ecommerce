@@ -25,8 +25,8 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "amount", nullable = false)
-    private int amount;
+    @Column(name = "stock_quantity", nullable = false)
+    private int stockQuantity;
 
     @Column(name = "price", nullable = false)
     private double price;
