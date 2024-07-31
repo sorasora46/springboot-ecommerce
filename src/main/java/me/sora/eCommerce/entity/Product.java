@@ -31,14 +31,16 @@ public class Product {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @Column(name = "created_by", nullable = false)
-    private String createdBy;
+    @ManyToOne()
+    @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = false)
+    private User createdBy;
 
     @Column(name = "created_date", nullable = false, updatable = false)
     private Instant createdDate;
 
-    @Column(name = "updated_by", nullable = false)
-    private String updatedBy;
+    @ManyToOne()
+    @JoinColumn(name = "updated_by", referencedColumnName = "id", nullable = false)
+    private User updatedBy;
 
     @Column(name = "updated_date", nullable = false)
     private Instant updatedDate;
