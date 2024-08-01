@@ -15,7 +15,7 @@ public class CreateProductRequest {
     private String description;
 
     @NotNull
-    private int amount;
+    private int stockQuantity;
 
     @NotNull
     private double price;

@@ -109,7 +109,7 @@ public class ProductControllerTest {
         var request = CreateProductRequest.builder()
                 .name("name")
                 .description("description")
-                .amount(50)
+                .stockQuantity(50)
                 .price(100.00)
                 .build();
 
@@ -147,7 +147,7 @@ public class ProductControllerTest {
         var request = CreateProductRequest.builder()
                 .name("name")
                 .description("description")
-                .amount(50)
+                .stockQuantity(50)
                 .price(100.00)
                 .build();
 
