@@ -1,5 +1,6 @@
 package me.sora.eCommerce.controller.advice;
 
+import io.jsonwebtoken.JwtException;
 import me.sora.eCommerce.dto.CommonResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -30,15 +31,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, ex.getStatusCode());
     }
 
-    @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<CommonResponse<String>> handleAuthenticationException(AuthenticationException ex) {
-        var response = CommonResponse.of(FAILED, AUTHENTICATION_ERROR);
-        return new ResponseEntity<>(response, UNAUTHORIZED);
-    }
+    @ExceptionHandler({AuthenticationException.class, JwtException.class})
+    public ResponseEntity<CommonResponse<String>> handleAuthenticationException(Exception ex) {
+        var exceptionMessage = ex.getMessage();
+        var responseMessage = exceptionMessage == null ? AUTHENTICATION_ERROR : exceptionMessage;
 
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<CommonResponse<String>> handleAuthenticationException(UsernameNotFoundException ex) {
-        var responseMessage = "Username `" + ex.getLocalizedMessage() + "` Not Found";
+        if (ex instanceof UsernameNotFoundException) {
+            responseMessage = "Username `" + ex.getMessage() + "` Not Found";
+        }
+
         var response = CommonResponse.of(FAILED, responseMessage);
         return new ResponseEntity<>(response, UNAUTHORIZED);
     }
