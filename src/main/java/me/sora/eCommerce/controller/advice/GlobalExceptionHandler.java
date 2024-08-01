@@ -2,6 +2,7 @@ package me.sora.eCommerce.controller.advice;
 
 import io.jsonwebtoken.JwtException;
 import me.sora.eCommerce.dto.CommonResponse;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.sql.SQLException;
 import java.util.Objects;
 
 import static me.sora.eCommerce.constant.ApiConstant.ApiStatus.FAILED;
@@ -61,6 +63,27 @@ public class GlobalExceptionHandler {
                 .toList();
         var response = CommonResponse.of(FAILED, ValidationErrorResponse.builder().errors(errors).build());
         return new ResponseEntity<>(response, ex.getStatusCode());
+    }
+
+    @ExceptionHandler(DataAccessException.class)
+    public ResponseEntity<CommonResponse<SQLErrorResponse>> handleSQLException(DataAccessException ex) {
+        var cause = ex.getMostSpecificCause();
+
+        Integer sqlErrorCode = null;
+        String sqlState = null;
+
+        if (cause instanceof SQLException) {
+            sqlErrorCode = ((SQLException) cause).getErrorCode();
+            sqlState = ((SQLException) cause).getSQLState();
+        }
+
+        var response = CommonResponse.of(FAILED, SQLErrorResponse.builder()
+                .message(cause.getMessage())
+                .sqlErrorCode(sqlErrorCode)
+                .sqlState(sqlState)
+                .build());
+
+        return new ResponseEntity<>(response, INTERNAL_SERVER_ERROR);
     }
 
 }
