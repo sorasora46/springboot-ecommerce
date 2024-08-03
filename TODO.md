@@ -1,12 +1,12 @@
 # User Stories
 - User
-  - a user shall be able to register to the system
-  - a user must have registered account
-  - a user shall be able to logged in to the system with registered account
-  - a user shall have a role of "USER"
+  - ~~a user shall be able to register to the system~~
+  - ~~a user must have registered account~~
+  - ~~a user shall be able to logged in to the system with registered account~~
+  - ~~a user shall have a role of "USER"~~
   - a user shall be able to refresh token when access token is expired
 - Admin
-  - an admin shall be able to add/remove product
+  - ~~an admin shall be able to add/remove product~~
   - an admin shall be able to edit product detail
     - name, price, amount, description, images, tag, category
   - an admin shall be able to add/remove promotion to the product
@@ -19,5 +19,9 @@
   - a user shall be able to see list of products by pagination
 
 # Tasks
-- [ ] create carts, cart_items tables
-- [ ] join carts with products table
+- [ ] create cart service
+- [ ] send accessToken, refreshToken when register/login
+- [ ] create refresh-token endpoint
+- [ ] create promotions tables
+- [x] create carts, cart_items tables
+- [x] join carts with products table
