@@ -1,12 +1,10 @@
 package me.sora.eCommerce.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import me.sora.eCommerce.dto.Cart.AddProductToCartRequest;
-import me.sora.eCommerce.dto.Cart.AddProductToCartResponse;
-import me.sora.eCommerce.dto.Cart.GetCartResponse;
-import me.sora.eCommerce.dto.Cart.RemoveProductFromCartResponse;
+import me.sora.eCommerce.dto.Cart.*;
 import me.sora.eCommerce.dto.CommonResponse;
 import me.sora.eCommerce.service.CartService;
 import org.springframework.http.ResponseEntity;
@@ -51,9 +49,11 @@ public class CartController {
         return ResponseEntity.ok().body(CommonResponse.of(SUCCESS, response));
     }
 
+    // TODO: validate action (ADD, REMOVE)
     @PatchMapping("/{productId}")
-    public Object updateCart(@NotNull @PathVariable String productId, @Valid @RequestBody AddProductToCartRequest request, @AuthenticationPrincipal UserDetails userDetails) {
-        return null;
+    public ResponseEntity<CommonResponse<UpdateProductInCartResponse>> updateCart(@NotNull @PathVariable String productId, @NotEmpty @RequestParam String action, @AuthenticationPrincipal UserDetails userDetails) {
+        var response = cartService.updateProductInCart(productId, action, userDetails.getUsername());
+        return ResponseEntity.ok().body(CommonResponse.of(SUCCESS, response));
     }
 
 }

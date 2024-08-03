@@ -19,6 +19,7 @@ public interface CartRepository extends JpaRepository<Cart, String> {
             "p.name, " +
             "p.description, " +
             "p.price, " +
+            "ci.quantity, " +
             "p.createdDate, " +
             "p.updatedDate) " +
             "FROM carts c, cart_items ci, products p " +

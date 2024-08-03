@@ -12,6 +12,7 @@ public class GetProductResponse {
     private String name;
     private String description;
     private double price;
+    private int quantity;
     private Instant createdDate;
     private Instant updatedDate;
 }

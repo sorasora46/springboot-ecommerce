@@ -1,12 +1,10 @@
 package me.sora.eCommerce.service;
 
 import lombok.RequiredArgsConstructor;
+import me.sora.eCommerce.constant.ApiConstant;
 import me.sora.eCommerce.constant.ErrorConstant;
 import me.sora.eCommerce.controller.advice.CustomException;
-import me.sora.eCommerce.dto.Cart.AddProductToCartRequest;
-import me.sora.eCommerce.dto.Cart.AddProductToCartResponse;
-import me.sora.eCommerce.dto.Cart.GetCartResponse;
-import me.sora.eCommerce.dto.Cart.RemoveProductFromCartResponse;
+import me.sora.eCommerce.dto.Cart.*;
 import me.sora.eCommerce.entity.Cart;
 import me.sora.eCommerce.entity.id.CartItemId;
 import me.sora.eCommerce.mapper.CartMapper;
@@ -19,6 +17,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+
+import static me.sora.eCommerce.constant.ApiConstant.CartAction.ADD;
+import static me.sora.eCommerce.constant.ApiConstant.CartAction.REMOVE;
 
 @Service
 @RequiredArgsConstructor
@@ -102,6 +103,52 @@ public class CartService {
         return RemoveProductFromCartResponse.builder()
                 .productId(productId)
                 .deletedDate(now)
+                .build();
+    }
+
+    public UpdateProductInCartResponse updateProductInCart(String productId, String action, String username) {
+        var user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
+        var cart = cartRepository.findCartByUser(user)
+                .orElseThrow(() -> new CustomException(ErrorConstant.CART_NOT_EXIST, HttpStatus.NOT_FOUND));
+        var product = productRepository.findById(productId)
+                .orElseThrow(() -> new CustomException(ErrorConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND));
+
+        var cartItemId = CartItemId.builder()
+                .cartId(cart.getId())
+                .productId(productId)
+                .build();
+        var item = cartItemRepository.findById(cartItemId)
+                .orElseThrow(() -> new CustomException(ErrorConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND));
+
+        var itemInCartQuantity = item.getQuantity();
+        var productStockQuantity = product.getStockQuantity();
+
+        if (ADD.equals(action)) {
+            var isEnoughQuantity = productStockQuantity - itemInCartQuantity >= 0;
+            if (!isEnoughQuantity) {
+                throw new CustomException(ErrorConstant.EXCEED_LIMIT_QUANTITY, HttpStatus.BAD_REQUEST);
+            }
+
+            item.setQuantity(itemInCartQuantity + 1);
+        }
+
+        var now = Instant.now();
+        if (REMOVE.equals(action)) {
+            if (itemInCartQuantity - 1 == 0) {
+                cartItemRepository.deleteById(cartItemId);
+            } else {
+                item.setQuantity(itemInCartQuantity - 1);
+                cartItemRepository.save(item);
+
+                cart.setUpdatedDate(now);
+                cartRepository.save(cart);
+            }
+        }
+
+        return UpdateProductInCartResponse.builder()
+                .productId(productId)
+                .updatedDate(now)
                 .build();
     }
 

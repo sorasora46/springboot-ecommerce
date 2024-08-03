@@ -24,5 +24,6 @@
 - [ ] send accessToken, refreshToken when register/login
 - [ ] create refresh-token endpoint
 - [ ] create promotions tables
+- [ ] reimplement update item in cart (set new quantity from request)
 - [x] create carts, cart_items tables
 - [x] join carts with products table
