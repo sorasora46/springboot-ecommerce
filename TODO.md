@@ -20,10 +20,10 @@
     - amount
 
 # Tasks
-- [x] create cart service
-- [x] send accessToken, refreshToken when register/login
-- [ ] create refresh-token endpoint
 - [ ] create promotions tables
 - [ ] reimplement update item in cart (set new quantity from request)
+- [x] create cart service
+- [x] send accessToken, refreshToken when register/login
+- [x] create refresh-token endpoint
 - [x] create carts, cart_items tables
 - [x] join carts with products table

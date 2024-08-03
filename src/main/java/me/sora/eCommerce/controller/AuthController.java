@@ -2,10 +2,7 @@ package me.sora.eCommerce.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import me.sora.eCommerce.dto.Authentication.AuthenticationRequest;
-import me.sora.eCommerce.dto.Authentication.AuthenticationResponse;
-import me.sora.eCommerce.dto.Authentication.RegisterRequest;
-import me.sora.eCommerce.dto.Authentication.RegisterResponse;
+import me.sora.eCommerce.dto.Authentication.*;
 import me.sora.eCommerce.dto.CommonResponse;
 import me.sora.eCommerce.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +35,12 @@ public class AuthController {
         return ResponseEntity
                 .created(URI.create(userId))
                 .body(CommonResponse.of(SUCCESS, response));
+    }
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<CommonResponse<RefreshTokenResponse>> refreshToken(@Valid @RequestBody RefreshTokenRequest request) {
+        var response = authenticationService.refreshToken(request.getRefreshToken());
+        return ResponseEntity.ok().body(CommonResponse.of(SUCCESS, response));
     }
 
 }

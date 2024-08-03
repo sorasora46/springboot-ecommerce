@@ -39,7 +39,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 var requestURI = request.getRequestURI();
 
-                if (!requestURI.equals("/api/v1/auth/register") && !requestURI.equals("/api/v1/auth/login")) {
+                if (!requestURI.startsWith("/api/v1/auth")) {
                     throw new CustomException(ErrorConstant.AUTHORIZATION_HEADER_NOT_FOUND, HttpStatus.UNAUTHORIZED);
                 }
 

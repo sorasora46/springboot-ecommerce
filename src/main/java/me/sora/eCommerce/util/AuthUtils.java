@@ -34,6 +34,15 @@ public class AuthUtils {
                 .compact();
     }
 
+    public String generateToken(String username, Date expiration) {
+        return Jwts.builder()
+                .subject(username)
+                .issuedAt(new Date())
+                .expiration(expiration)
+                .signWith(getSigningKey())
+                .compact();
+    }
+
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }

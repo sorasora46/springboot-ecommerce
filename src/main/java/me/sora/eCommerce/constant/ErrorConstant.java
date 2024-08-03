@@ -9,5 +9,6 @@ public class ErrorConstant {
     public static String EXCEED_LIMIT_QUANTITY = "Exceed Limit Quantity";
     public static String PRODUCT_ALREADY_ADDED_TO_CART = "Product Already Added to Cart";
     public static String CART_NOT_EXIST = "Cart Not Exist";
+    public static String TOKEN_EXPIRE = "Token Expire";
 
 }

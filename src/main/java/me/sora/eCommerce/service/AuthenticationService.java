@@ -2,15 +2,15 @@ package me.sora.eCommerce.service;
 
 import lombok.RequiredArgsConstructor;
 import me.sora.eCommerce.constant.AuthConstant;
-import me.sora.eCommerce.dto.Authentication.AuthenticationRequest;
-import me.sora.eCommerce.dto.Authentication.AuthenticationResponse;
-import me.sora.eCommerce.dto.Authentication.RegisterRequest;
-import me.sora.eCommerce.dto.Authentication.RegisterResponse;
+import me.sora.eCommerce.constant.ErrorConstant;
+import me.sora.eCommerce.controller.advice.CustomException;
+import me.sora.eCommerce.dto.Authentication.*;
 import me.sora.eCommerce.entity.Credential;
 import me.sora.eCommerce.mapper.AuthenticationMapper;
 import me.sora.eCommerce.repository.CredentialRepository;
 import me.sora.eCommerce.repository.UserRepository;
 import me.sora.eCommerce.util.AuthUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -78,6 +78,22 @@ public class AuthenticationService {
         var refreshToken = authUtils.generateToken(savedUser, refreshTokenExpiration);
 
         return AuthenticationMapper.INSTANCE.fromEntityToRegisterResponse(accessToken, refreshToken, savedUser);
+    }
+
+    public RefreshTokenResponse refreshToken(String refreshToken) {
+        if (authUtils.isTokenExpired(refreshToken)) {
+            throw new CustomException(ErrorConstant.TOKEN_EXPIRE, HttpStatus.UNAUTHORIZED);
+        }
+
+        var username = authUtils.extractUsername(refreshToken);
+
+        var currentTime = System.currentTimeMillis();
+        var accessTokenExpiration = new Date(currentTime + AuthConstant.ONE_DAY * 2);
+        var accessToken = authUtils.generateToken(username, accessTokenExpiration);
+
+        return RefreshTokenResponse.builder()
+                .accessToken(accessToken)
+                .build();
     }
 
 }
