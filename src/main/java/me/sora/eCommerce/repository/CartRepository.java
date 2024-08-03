@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CartRepository extends JpaRepository<Cart, String> {
@@ -22,6 +23,6 @@ public interface CartRepository extends JpaRepository<Cart, String> {
             "p.updatedDate) " +
             "FROM carts c, cart_items ci, products p " +
             "WHERE c.user = :user AND ci.cart = c AND ci.product = p")
-    List<GetProductResponse> findByUser(@Param("user") User user);
+    Optional<List<GetProductResponse>> findByUser(@Param("user") User user);
 
 }
