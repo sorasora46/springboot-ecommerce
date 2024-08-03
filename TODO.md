@@ -20,7 +20,7 @@
     - amount
 
 # Tasks
-- [ ] create cart service
+- [x] create cart service
 - [ ] send accessToken, refreshToken when register/login
 - [ ] create refresh-token endpoint
 - [ ] create promotions tables
