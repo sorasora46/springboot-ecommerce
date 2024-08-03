@@ -21,7 +21,7 @@
 
 # Tasks
 - [x] create cart service
-- [ ] send accessToken, refreshToken when register/login
+- [x] send accessToken, refreshToken when register/login
 - [ ] create refresh-token endpoint
 - [ ] create promotions tables
 - [ ] reimplement update item in cart (set new quantity from request)

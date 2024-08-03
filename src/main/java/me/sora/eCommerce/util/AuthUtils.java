@@ -25,11 +25,11 @@ public class AuthUtils {
 
     private static final SecureRandom RANDOM = new SecureRandom();
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails, Date expiration) {
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + AuthConstant.ONE_DAY * 2))
+                .expiration(expiration)
                 .signWith(getSigningKey())
                 .compact();
     }

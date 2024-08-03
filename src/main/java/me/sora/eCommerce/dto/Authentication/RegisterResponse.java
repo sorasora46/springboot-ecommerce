@@ -8,7 +8,8 @@ import java.time.Instant;
 @Data
 @Builder
 public class RegisterResponse {
-    private String token;
+    private String accessToken;
+    private String refreshToken;
     private String id;
     private Instant createdDate;
 }

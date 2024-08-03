@@ -17,6 +17,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -37,10 +40,17 @@ public class AuthenticationService {
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, saltedPassword));
 
-        var token = authUtils.generateToken(user);
+        var currentTime = System.currentTimeMillis();
+        var accessTokenExpiration = new Date(currentTime + AuthConstant.ONE_DAY * 2);
+        var refreshTokenExpiration = new Date(currentTime + AuthConstant.ONE_DAY * 5);
+
+        var accessToken = authUtils.generateToken(user, accessTokenExpiration);
+        var refreshToken = authUtils.generateToken(user, refreshTokenExpiration);
 
         return AuthenticationResponse.builder()
-                .token(token)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .loggedInDate(Instant.now())
                 .build();
     }
 
@@ -60,9 +70,14 @@ public class AuthenticationService {
 
         credentialRepository.save(credential);
 
-        var token = authUtils.generateToken(savedUser);
+        var currentTime = System.currentTimeMillis();
+        var accessTokenExpiration = new Date(currentTime + AuthConstant.ONE_DAY * 2);
+        var refreshTokenExpiration = new Date(currentTime + AuthConstant.ONE_DAY * 5);
 
-        return AuthenticationMapper.INSTANCE.fromEntityToRegisterResponse(token, savedUser);
+        var accessToken = authUtils.generateToken(savedUser, accessTokenExpiration);
+        var refreshToken = authUtils.generateToken(savedUser, refreshTokenExpiration);
+
+        return AuthenticationMapper.INSTANCE.fromEntityToRegisterResponse(accessToken, refreshToken, savedUser);
     }
 
 }

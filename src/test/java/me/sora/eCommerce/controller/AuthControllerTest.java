@@ -62,7 +62,8 @@ public class AuthControllerTest {
         var response = RegisterResponse.builder()
                 .id("id")
                 .createdDate(now)
-                .token("token")
+                .accessToken("accessToken")
+                .refreshToken("refreshToken")
                 .build();
 
         // When
@@ -78,7 +79,8 @@ public class AuthControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(SUCCESS))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.result.id").value(response.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.result.createdDate").value(response.getCreatedDate().toString()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.result.token").value(response.getToken()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.result.accessToken").value(response.getAccessToken()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.result.refreshToken").value(response.getRefreshToken()));
     }
 
     @Test
@@ -103,12 +105,15 @@ public class AuthControllerTest {
     @Test
     void givenRequest_whenLogin_thenSuccess() throws Exception {
         // Given
+        var now = Instant.now();
         var request = AuthenticationRequest.builder()
                 .username("username")
                 .password("password")
                 .build();
         var response = AuthenticationResponse.builder()
-                .token("token")
+                .accessToken("accessToken")
+                .refreshToken("refreshToken")
+                .loggedInDate(now)
                 .build();
 
         // When
@@ -122,7 +127,9 @@ public class AuthControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(SUCCESS))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.result.token").value(response.getToken()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.result.accessToken").value(response.getAccessToken()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.result.refreshToken").value(response.getRefreshToken()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.result.loggedInDate").value(now.toString()));
     }
 
     @Test

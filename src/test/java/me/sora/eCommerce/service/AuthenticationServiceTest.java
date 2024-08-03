@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,7 +57,8 @@ public class AuthenticationServiceTest {
         var salt = "salt";
         var saltedPassword = password + salt;
         var user = new User();
-        var token = "token";
+        var accessToken = "accessToken";
+        var refreshToken = "refreshToken";
 
         var request = AuthenticationRequest.builder()
                 .username(username)
@@ -67,12 +69,13 @@ public class AuthenticationServiceTest {
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user));
         when(credentialRepository.findSaltByUserId(any(User.class))).thenReturn(Optional.of(salt));
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(new UsernamePasswordAuthenticationToken(username, saltedPassword));
-        when(authUtils.generateToken(any(User.class))).thenReturn(token);
+        when(authUtils.generateToken(any(User.class), any(Date.class))).thenReturn(accessToken, refreshToken);
 
         // Then
         var response = authenticationService.authenticate(request);
         assertNotNull(response);
-        assertEquals(response.getToken(), token);
+        assertEquals(response.getAccessToken(), accessToken);
+        assertEquals(response.getRefreshToken(), refreshToken);
     }
 
     @Test
@@ -136,7 +139,8 @@ public class AuthenticationServiceTest {
                 .build();
         var salt = "salt";
         var hashedPassword = "hashedPassword";
-        var token = "token";
+        var accessToken = "accessToken";
+        var refreshToken = "refreshToken";
         var user = new User();
         user.setId("id");
         user.setCreatedDate(Instant.now());
@@ -146,12 +150,13 @@ public class AuthenticationServiceTest {
         when(authUtils.generateSalt(anyInt())).thenReturn(salt);
         when(passwordEncoder.encode(anyString())).thenReturn(hashedPassword);
         when(credentialRepository.save(any(Credential.class))).thenReturn(new Credential());
-        when(authUtils.generateToken(any(User.class))).thenReturn(token);
+        when(authUtils.generateToken(any(User.class), any(Date.class))).thenReturn(accessToken, refreshToken);
 
         // Then
         var response = authenticationService.register(request);
         assertNotNull(response);
-        assertEquals(response.getToken(), token);
+        assertEquals(response.getAccessToken(), accessToken);
+        assertEquals(response.getRefreshToken(), refreshToken);
         assertEquals(response.getId(), user.getId());
         assertEquals(response.getCreatedDate(), user.getCreatedDate());
     }

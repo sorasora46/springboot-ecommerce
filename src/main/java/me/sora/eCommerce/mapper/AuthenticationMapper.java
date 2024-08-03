@@ -12,6 +12,6 @@ public interface AuthenticationMapper {
 
     User fromRegisterRequestToUser(RegisterRequest registerRequest);
 
-    RegisterResponse fromEntityToRegisterResponse(String token, User user);
+    RegisterResponse fromEntityToRegisterResponse(String accessToken, String refreshToken, User user);
 
 }
