@@ -13,10 +13,11 @@
 - Product
   - a user shall be able to find a product
     - from id/name/tag,category/image/price
+  - a user shall be able to see list of products by pagination
+- Cart
   - a user shall be able to add/remove products to/from their cart
   - a user shall be able to edit product in their cart
     - amount
-  - a user shall be able to see list of products by pagination
 
 # Tasks
 - [ ] create cart service
