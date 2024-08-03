@@ -21,28 +21,18 @@ public class CartController {
 
     private final CartService cartService;
 
-    // TODO: implement me
-    // 1. get all items in cart (no pagination)
-    // 2. if cart don't exist return null 200
     @GetMapping()
     public ResponseEntity<CommonResponse<GetCartResponse>> getCart(@AuthenticationPrincipal UserDetails userDetails) {
         var response = cartService.getCart(userDetails.getUsername());
         return ResponseEntity.ok().body(CommonResponse.of(SUCCESS, response));
     }
 
-    // TODO: implement me
-    // 1. create cart when no cart exist
-    // 2. if cart exist add item to cart
-    // both cases: check if stockQuantity of product is enough
     @PostMapping()
     public ResponseEntity<CommonResponse<AddProductToCartResponse>> addToCart(@Valid @RequestBody AddProductToCartRequest request, @AuthenticationPrincipal UserDetails userDetails) {
         var response = cartService.addToCart(request, userDetails.getUsername());
         return ResponseEntity.ok().body(CommonResponse.of(SUCCESS, response));
     }
 
-    // TODO: implement me
-    // 1. return 500 if remove item from non-existing cart
-    // 2. remove item from cart using id
     @DeleteMapping("/{productId}")
     public ResponseEntity<CommonResponse<RemoveProductFromCartResponse>> removeFromCart(@NotNull @PathVariable String productId, @AuthenticationPrincipal UserDetails userDetails) {
         var response = cartService.removeFromCart(productId, userDetails.getUsername());
