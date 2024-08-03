@@ -7,5 +7,5 @@ import lombok.Data;
 @Builder
 public class AddProductToCartRequest {
     private String productId;
-    private String quantity;
+    private int quantity;
 }

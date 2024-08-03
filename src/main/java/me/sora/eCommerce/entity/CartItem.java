@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import me.sora.eCommerce.entity.id.CartItemId;
 
 import java.time.Instant;
 
 @Getter
 @Setter
+@ToString
 @RequiredArgsConstructor
 @Entity(name = "cart_items")
 public class CartItem {
