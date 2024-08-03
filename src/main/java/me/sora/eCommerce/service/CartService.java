@@ -6,6 +6,7 @@ import me.sora.eCommerce.controller.advice.CustomException;
 import me.sora.eCommerce.dto.Cart.AddProductToCartRequest;
 import me.sora.eCommerce.dto.Cart.AddProductToCartResponse;
 import me.sora.eCommerce.dto.Cart.GetCartResponse;
+import me.sora.eCommerce.dto.Cart.RemoveProductFromCartResponse;
 import me.sora.eCommerce.entity.Cart;
 import me.sora.eCommerce.entity.id.CartItemId;
 import me.sora.eCommerce.mapper.CartMapper;
@@ -16,6 +17,8 @@ import me.sora.eCommerce.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.time.Instant;
 
 @Service
 @RequiredArgsConstructor
@@ -55,9 +58,10 @@ public class CartService {
             cart = cartOptional.get();
         }
 
-        var cartItemId = new CartItemId();
-        cartItemId.setCartId(cart.getId());
-        cartItemId.setProductId(product.getId());
+        var cartItemId = CartItemId.builder()
+                .cartId(cart.getId())
+                .productId(product.getId())
+                .build();
 
         var cartItemOptional = cartItemRepository.findById(cartItemId);
         if (cartItemOptional.isPresent()) {
@@ -66,8 +70,9 @@ public class CartService {
 
         var cartItem = CartMapper.INSTANCE.fromAddProductToCartRequestToCartItem(cartItemId, cart, product, request);
         var savedCartItem = cartItemRepository.save(cartItem);
+        cart.setUpdatedDate(Instant.now());
+        cartRepository.save(cart);
 
-        System.out.println(savedCartItem);
         return AddProductToCartResponse.builder()
                 .productId(savedCartItem.getProduct().getId())
                 .quantity(savedCartItem.getQuantity())
@@ -75,8 +80,29 @@ public class CartService {
                 .build();
     }
 
-    public Object removeFromCart() {
-        return null;
+    public RemoveProductFromCartResponse removeFromCart(String productId, String username) {
+        var user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
+        var cart = cartRepository.findCartByUser(user)
+                .orElseThrow(() -> new CustomException(ErrorConstant.CART_NOT_EXIST, HttpStatus.NOT_FOUND));
+
+        var cartItemId = CartItemId.builder()
+                .cartId(cart.getId())
+                .productId(productId)
+                .build();
+        var item = cartItemRepository.findById(cartItemId);
+        cartItemRepository.deleteById(cartItemId);
+
+        var now = Instant.now();
+        if (item.isPresent()) {
+            cart.setUpdatedDate(now);
+            cartRepository.save(cart);
+        }
+
+        return RemoveProductFromCartResponse.builder()
+                .productId(productId)
+                .deletedDate(now)
+                .build();
     }
 
 }

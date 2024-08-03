@@ -1,10 +1,12 @@
 package me.sora.eCommerce.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import me.sora.eCommerce.dto.Cart.AddProductToCartRequest;
 import me.sora.eCommerce.dto.Cart.AddProductToCartResponse;
 import me.sora.eCommerce.dto.Cart.GetCartResponse;
+import me.sora.eCommerce.dto.Cart.RemoveProductFromCartResponse;
 import me.sora.eCommerce.dto.CommonResponse;
 import me.sora.eCommerce.service.CartService;
 import org.springframework.http.ResponseEntity;
@@ -43,8 +45,14 @@ public class CartController {
     // TODO: implement me
     // 1. return 500 if remove item from non-existing cart
     // 2. remove item from cart using id
-    @DeleteMapping()
-    public Object removeFromCart() {
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<CommonResponse<RemoveProductFromCartResponse>> removeFromCart(@NotNull @PathVariable String productId, @AuthenticationPrincipal UserDetails userDetails) {
+        var response = cartService.removeFromCart(productId, userDetails.getUsername());
+        return ResponseEntity.ok().body(CommonResponse.of(SUCCESS, response));
+    }
+
+    @PatchMapping("/{productId}")
+    public Object updateCart(@NotNull @PathVariable String productId, @Valid @RequestBody AddProductToCartRequest request, @AuthenticationPrincipal UserDetails userDetails) {
         return null;
     }
 

@@ -8,5 +8,6 @@ public class ErrorConstant {
     public static String AUTHORIZATION_HEADER_NOT_FOUND = "Authorization Header Not Found";
     public static String EXCEED_LIMIT_QUANTITY = "Exceed Limit Quantity";
     public static String PRODUCT_ALREADY_ADDED_TO_CART = "Product Already Added to Cart";
+    public static String CART_NOT_EXIST = "Cart Not Exist";
 
 }
