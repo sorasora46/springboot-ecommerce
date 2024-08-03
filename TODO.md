@@ -19,5 +19,5 @@
   - a user shall be able to see list of products by pagination
 
 # Tasks
-[ ] create carts, cart_items tables
-[ ] join carts with products table
+- [ ] create carts, cart_items tables
+- [ ] join carts with products table
