@@ -58,6 +58,9 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Credential credential;
 
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
+
     @PrePersist
     protected void onCreate() {
         var now = Instant.now();
