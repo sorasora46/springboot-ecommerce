@@ -28,6 +28,7 @@
 - [ ] add more error message
 - [ ] create unit test for cart
 - [ ] create unit test for refresh token
+- [ ] learn how to add cardinality using JPA
 - [x] create cart service
 - [x] send accessToken, refreshToken when register/login
 - [x] create refresh-token endpoint
