@@ -13,6 +13,10 @@ public class CustomException extends RuntimeException {
     private static final long serialVersionUID = 1L;
     private HttpStatus httpStatus;
 
+    public CustomException(String message) {
+        this(message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     public CustomException(String message, HttpStatus httpStatus) {
         super(message);
         this.httpStatus = httpStatus;
