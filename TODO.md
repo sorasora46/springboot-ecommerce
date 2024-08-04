@@ -18,9 +18,10 @@
   - a user shall be able to add/remove products to/from their cart
   - a user shall be able to edit product in their cart
     - amount
+  - a user shall be able to check out item in cart to be an order
 
 # Tasks
-- [ ] create order table
+- [ ] create orders, order_items table
 - [ ] implement checkout logic
 - [ ] create promotions tables
 - [ ] reimplement update item in cart (set new quantity from request)
