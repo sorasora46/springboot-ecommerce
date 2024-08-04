@@ -20,8 +20,13 @@
     - amount
 
 # Tasks
+- [ ] create order table
+- [ ] implement checkout logic
 - [ ] create promotions tables
 - [ ] reimplement update item in cart (set new quantity from request)
+- [ ] add more error message
+- [ ] create unit test for cart
+- [ ] create unit test for refresh token
 - [x] create cart service
 - [x] send accessToken, refreshToken when register/login
 - [x] create refresh-token endpoint
