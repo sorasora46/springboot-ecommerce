@@ -2,6 +2,7 @@ package me.sora.eCommerce.repository;
 
 import me.sora.eCommerce.dto.Product.GetProductResponse;
 import me.sora.eCommerce.entity.Cart;
+import me.sora.eCommerce.entity.CartItem;
 import me.sora.eCommerce.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,6 +26,11 @@ public interface CartRepository extends JpaRepository<Cart, String> {
             "FROM carts c, cart_items ci, products p " +
             "WHERE c.user = :user AND ci.cart = c AND ci.product = p")
     Optional<List<GetProductResponse>> findCartItemsByUser(@Param("user") User user);
+
+    @Query("SELECT ci " +
+            "FROM carts c, cart_items ci, products p " +
+            "WHERE c.user = :user AND ci.cart = c AND ci.product = p")
+    List<CartItem> findRawCartItemsByUser(@Param("user") User user);
 
     Optional<Cart> findCartByUser(User user);
 
