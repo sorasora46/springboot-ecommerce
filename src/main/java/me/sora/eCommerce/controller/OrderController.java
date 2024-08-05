@@ -1,7 +1,9 @@
 package me.sora.eCommerce.controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
+import me.sora.eCommerce.dto.Order.CreateOrderRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,7 @@ public class OrderController {
     }
 
     @PostMapping()
-    public Object createOrder(@AuthenticationPrincipal UserDetails userDetails) {
+    public Object createOrder(@Valid @RequestBody CreateOrderRequest request, @AuthenticationPrincipal UserDetails userDetails) {
         return null;
     }
 
