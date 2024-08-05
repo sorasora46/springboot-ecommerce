@@ -21,6 +21,7 @@
   - a user shall be able to check out item in cart to be an order
 
 # Tasks
+- [ ] update product stock when create order
 - [ ] create orders, order_items table
 - [ ] implement checkout logic
 - [ ] create promotions tables
