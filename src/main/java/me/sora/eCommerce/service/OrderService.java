@@ -35,9 +35,12 @@ public class OrderService {
         if (items.isEmpty()) {
             throw new CustomException(ErrorConstant.CAN_NOT_CREATE_ORDER_CART_EMPTY);
         }
+        // TODO: compare amount by product id
+        // from 1. item in cart table
         var productIds = items.stream()
                 .map(item -> item.getProduct().getId())
                 .toList();
+        // 2. stock quantity from product table
         var products = productRepository.findAllById(productIds);
 
         var order = OrderMapper.INSTANCE.fromCreateOrderRequestToOrderEntity(request, user);
