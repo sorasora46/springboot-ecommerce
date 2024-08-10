@@ -5,8 +5,11 @@ import me.sora.eCommerce.constant.ErrorConstant;
 import me.sora.eCommerce.controller.advice.CustomException;
 import me.sora.eCommerce.dto.Order.CreateOrderRequest;
 import me.sora.eCommerce.dto.Order.CreateOrderResponse;
+import me.sora.eCommerce.dto.Order.GetOrderByIdResponse;
+import me.sora.eCommerce.entity.OrderItem;
 import me.sora.eCommerce.mapper.OrderMapper;
 import me.sora.eCommerce.repository.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +23,19 @@ public class OrderService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
-    public Object getOrderById(String orderId) {
-        return null;
+    public GetOrderByIdResponse getOrderById(String orderId) {
+        var orderDatail = orderRepository.findById(orderId)
+                .orElseThrow(() -> new CustomException(ErrorConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND));
+
+        var orders = orderItemRepository.findAllByOrderId(orderId);
+
+        var itemIds = orders.stream().map(item -> item.getProduct().getId()).toList();
+        var products = productRepository.findAllById(itemIds);
+        var totalPrice = orders.stream().map(OrderItem::getPrice).reduce(0.0, Double::sum);
+
+        var response = OrderMapper.INSTANCE.fromOrderAndOrderItemAndProductEntitiesToGetOrderByIdResponse(orderDatail, totalPrice, products);
+
+        return response;
     }
 
     public Object getOrders(String username) {
