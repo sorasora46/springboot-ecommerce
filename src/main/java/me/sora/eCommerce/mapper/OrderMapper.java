@@ -1,10 +1,8 @@
 package me.sora.eCommerce.mapper;
 
 import me.sora.eCommerce.dto.Order.CreateOrderRequest;
-import me.sora.eCommerce.entity.CartItem;
-import me.sora.eCommerce.entity.Order;
-import me.sora.eCommerce.entity.OrderItem;
-import me.sora.eCommerce.entity.User;
+import me.sora.eCommerce.dto.Order.GetOrderByIdResponse;
+import me.sora.eCommerce.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -26,5 +24,27 @@ public interface OrderMapper {
 
     @Mapping(target = "user", source = "user")
     Order fromCreateOrderRequestToOrderEntity(CreateOrderRequest createOrderRequest, User user);
+
+    @Mapping(target = "order", expression = "java(fromOrderEntityToOrderData(order, totalPrice))")
+    @Mapping(target = "orderItems", expression = "java(fromProductEntitiesToOrderItemDataList(products))")
+    GetOrderByIdResponse fromOrderAndOrderItemAndProductEntitiesToGetOrderByIdResponse(
+            Order order,
+            double totalPrice,
+            List<Product> products
+    );
+
+    @Mapping(target = "orderId", source = "order.id")
+    GetOrderByIdResponse.OrderData fromOrderEntityToOrderData(Order order, double totalPrice);
+
+    default List<GetOrderByIdResponse.OrderItemData> fromOrderEntityToOrderItemDataList(List<Product> products) {
+        return products.stream()
+                .map(this::fromProductEntityToOrderItemData)
+                .toList();
+    }
+
+    @Mapping(target = "productId", source = "product.id")
+    @Mapping(target = "productName", source = "product.name")
+    @Mapping(target = "productDescription", source = "product.description")
+    GetOrderByIdResponse.OrderItemData fromProductEntityToOrderItemData(Product product);
 
 }
