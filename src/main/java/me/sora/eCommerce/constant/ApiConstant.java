@@ -12,4 +12,10 @@ public class ApiConstant {
         public static String REMOVE = "REMOVE";
     }
 
+    public enum OrderStatus {
+        WAITING_FOR_PAYMENT,
+        SHIPPING,
+        DELIVERED
+    }
+
 }

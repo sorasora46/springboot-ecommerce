@@ -1,5 +1,6 @@
 package me.sora.eCommerce.mapper;
 
+import me.sora.eCommerce.constant.ApiConstant;
 import me.sora.eCommerce.dto.Order.CreateOrderRequest;
 import me.sora.eCommerce.dto.Order.GetOrderByIdResponse;
 import me.sora.eCommerce.entity.*;
@@ -23,7 +24,7 @@ public interface OrderMapper {
     }
 
     @Mapping(target = "user", source = "user")
-    Order fromCreateOrderRequestToOrderEntity(CreateOrderRequest createOrderRequest, User user);
+    Order fromCreateOrderRequestToOrderEntity(CreateOrderRequest createOrderRequest, User user, ApiConstant.OrderStatus status);
 
     @Mapping(target = "order", expression = "java(fromOrderEntityToOrderData(order, totalPrice))")
     @Mapping(target = "orderItems", expression = "java(fromProductEntitiesToOrderItemDataList(products))")

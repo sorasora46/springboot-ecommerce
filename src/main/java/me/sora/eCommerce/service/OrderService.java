@@ -1,6 +1,7 @@
 package me.sora.eCommerce.service;
 
 import lombok.RequiredArgsConstructor;
+import me.sora.eCommerce.constant.ApiConstant;
 import me.sora.eCommerce.constant.ErrorConstant;
 import me.sora.eCommerce.controller.advice.CustomException;
 import me.sora.eCommerce.dto.Order.CreateOrderRequest;
@@ -61,29 +62,27 @@ public class OrderService {
         var products = productRepository.findAllById(productIds);
 
         List<Product> productNotFoundList = new ArrayList<>();
-        List<Product> updatedProducts = new ArrayList<>();
         for (var item : items) {
             productNotFoundList = products.stream()
                     .filter(p ->
                             p.getStockQuantity() - item.getQuantity() < 0
                                     || !(item.getId().getProductId().equals(p.getId())))
                     .toList();
-            updatedProducts = products.stream()
-                    .peek(p -> p.setStockQuantity(p.getStockQuantity() - item.getQuantity()))
-                    .toList();
         }
         if (!productNotFoundList.isEmpty()) {
             throw new CustomException(ErrorConstant.ERROR_CREATING_ORDER, HttpStatus.CONFLICT);
         }
 
-        var order = OrderMapper.INSTANCE.fromCreateOrderRequestToOrderEntity(request, user);
-        orderRepository.save(order);
+        var order = OrderMapper.INSTANCE.fromCreateOrderRequestToOrderEntity(request, user, ApiConstant.OrderStatus.WAITING_FOR_PAYMENT);
+        order = orderRepository.save(order);
 
         var orderItems = OrderMapper.INSTANCE.fromCartItemListToOrderItemList(items, order);
-
         orderItemRepository.saveAll(orderItems);
 
-        return null;
+        return CreateOrderResponse.builder()
+                .orderId(order.getId())
+                .createdDate(order.getCreatedDate())
+                .build();
     }
 
 }

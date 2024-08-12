@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import me.sora.eCommerce.constant.ApiConstant;
 import me.sora.eCommerce.constant.ErrorConstant;
 import me.sora.eCommerce.controller.advice.CustomException;
 
@@ -36,8 +37,9 @@ public class Order {
     @Column(name = "post_code", nullable = false, updatable = false)
     private String postCode;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private String status;
+    private ApiConstant.OrderStatus status;
 
     @Column(name = "created_date", nullable = false, updatable = false)
     private Instant createdDate;
