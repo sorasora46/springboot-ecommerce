@@ -36,6 +36,9 @@ public class Order {
     @Column(name = "post_code", nullable = false, updatable = false)
     private String postCode;
 
+    @Column(name = "status", nullable = false)
+    private String status;
+
     @Column(name = "created_date", nullable = false, updatable = false)
     private Instant createdDate;
 
