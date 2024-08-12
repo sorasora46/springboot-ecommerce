@@ -7,11 +7,15 @@ import me.sora.eCommerce.dto.Order.CreateOrderRequest;
 import me.sora.eCommerce.dto.Order.CreateOrderResponse;
 import me.sora.eCommerce.dto.Order.GetOrderByIdResponse;
 import me.sora.eCommerce.entity.OrderItem;
+import me.sora.eCommerce.entity.Product;
 import me.sora.eCommerce.mapper.OrderMapper;
 import me.sora.eCommerce.repository.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -45,17 +49,32 @@ public class OrderService {
     public CreateOrderResponse createOrder(CreateOrderRequest request, String username) {
         var user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
+
         var items = cartRepository.findRawCartItemsByUser(user);
         if (items.isEmpty()) {
             throw new CustomException(ErrorConstant.CAN_NOT_CREATE_ORDER_CART_EMPTY);
         }
-        // TODO: compare amount by product id
-        // from 1. item in cart table
+
         var productIds = items.stream()
                 .map(item -> item.getProduct().getId())
                 .toList();
-        // 2. stock quantity from product table
         var products = productRepository.findAllById(productIds);
+
+        List<Product> productNotFoundList = new ArrayList<>();
+        List<Product> updatedProducts = new ArrayList<>();
+        for (var item : items) {
+            productNotFoundList = products.stream()
+                    .filter(p ->
+                            p.getStockQuantity() - item.getQuantity() < 0
+                                    || !(item.getId().getProductId().equals(p.getId())))
+                    .toList();
+            updatedProducts = products.stream()
+                    .peek(p -> p.setStockQuantity(p.getStockQuantity() - item.getQuantity()))
+                    .toList();
+        }
+        if (!productNotFoundList.isEmpty()) {
+            throw new CustomException(ErrorConstant.ERROR_CREATING_ORDER, HttpStatus.CONFLICT);
+        }
 
         var order = OrderMapper.INSTANCE.fromCreateOrderRequestToOrderEntity(request, user);
         orderRepository.save(order);

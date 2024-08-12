@@ -12,5 +12,6 @@ public class ErrorConstant {
     public static String TOKEN_EXPIRE = "Token Expire";
     public static String CREATED_ORDER_CAN_NOT_BE_UPDATE = "Created Order Can Not Be Update";
     public static String CAN_NOT_CREATE_ORDER_CART_EMPTY = "Can Not Create Order Cart Empty";
+    public static String ERROR_CREATING_ORDER = "Error Creating Order, Product Not Found Or Not Enough Available";
 
 }
