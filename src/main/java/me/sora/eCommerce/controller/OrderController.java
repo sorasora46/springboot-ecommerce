@@ -3,7 +3,6 @@ package me.sora.eCommerce.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
-import me.sora.eCommerce.constant.ApiConstant;
 import me.sora.eCommerce.dto.CommonResponse;
 import me.sora.eCommerce.dto.Order.CreateOrderRequest;
 import me.sora.eCommerce.dto.Order.CreateOrderResponse;
