@@ -16,7 +16,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -61,16 +63,25 @@ public class OrderService {
                 .toList();
         var products = productRepository.findAllById(productIds);
 
-        List<Product> productNotFoundList = new ArrayList<>();
+        List<Map<String, Object>> productErrorList = new ArrayList<>();
         for (var item : items) {
-            productNotFoundList = products.stream()
+            var notFoundProducts = products.stream()
                     .filter(p ->
                             p.getStockQuantity() - item.getQuantity() < 0
                                     || !(item.getId().getProductId().equals(p.getId())))
                     .toList();
+
+            for (var product : notFoundProducts) {
+                Map<String, Object> errorDetails = new HashMap<>();
+                errorDetails.put("productId", product.getId());
+                errorDetails.put("productName", product.getName());
+                errorDetails.put("stockQuantity", product.getStockQuantity());
+                errorDetails.put("message", "Product stock is insufficient or product does not match the cart item.");
+                productErrorList.add(errorDetails);
+            }
         }
-        if (!productNotFoundList.isEmpty()) {
-            throw new CustomException(ErrorConstant.ERROR_CREATING_ORDER, HttpStatus.CONFLICT);
+        if (!productErrorList.isEmpty()) {
+            throw new CustomException(productErrorList, HttpStatus.CONFLICT);
         }
 
         var order = OrderMapper.INSTANCE.fromCreateOrderRequestToOrderEntity(request, user, ApiConstant.OrderStatus.WAITING_FOR_PAYMENT);
