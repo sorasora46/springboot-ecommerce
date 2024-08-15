@@ -40,9 +40,7 @@ public class OrderService {
         var products = productRepository.findAllById(itemIds);
         var totalPrice = orders.stream().map(OrderItem::getPrice).reduce(0.0, Double::sum);
 
-        var response = OrderMapper.INSTANCE.fromOrderAndOrderItemAndProductEntitiesToGetOrderByIdResponse(orderDetail, totalPrice, products);
-
-        return response;
+        return OrderMapper.INSTANCE.fromOrderAndOrderItemAndProductEntitiesToGetOrderByIdResponse(orderDetail, totalPrice, products, orders);
     }
 
     public Object getOrders(String username) {
