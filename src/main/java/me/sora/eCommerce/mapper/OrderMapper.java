@@ -37,7 +37,7 @@ public interface OrderMapper {
     @Mapping(target = "orderId", source = "order.id")
     GetOrderByIdResponse.OrderData fromOrderEntityToOrderData(Order order, double totalPrice);
 
-    default List<GetOrderByIdResponse.OrderItemData> fromOrderEntityToOrderItemDataList(List<Product> products) {
+    default List<GetOrderByIdResponse.OrderItemData> fromProductEntitiesToOrderItemDataList(List<Product> products) {
         return products.stream()
                 .map(this::fromProductEntityToOrderItemData)
                 .toList();

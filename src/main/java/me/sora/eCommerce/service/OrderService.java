@@ -31,7 +31,7 @@ public class OrderService {
     private final UserRepository userRepository;
 
     public GetOrderByIdResponse getOrderById(String orderId) {
-        var orderDatail = orderRepository.findById(orderId)
+        var orderDetail = orderRepository.findById(orderId)
                 .orElseThrow(() -> new CustomException(ErrorConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND));
 
         var orders = orderItemRepository.findAllByOrderId(orderId);
@@ -40,7 +40,7 @@ public class OrderService {
         var products = productRepository.findAllById(itemIds);
         var totalPrice = orders.stream().map(OrderItem::getPrice).reduce(0.0, Double::sum);
 
-        var response = OrderMapper.INSTANCE.fromOrderAndOrderItemAndProductEntitiesToGetOrderByIdResponse(orderDatail, totalPrice, products);
+        var response = OrderMapper.INSTANCE.fromOrderAndOrderItemAndProductEntitiesToGetOrderByIdResponse(orderDetail, totalPrice, products);
 
         return response;
     }
