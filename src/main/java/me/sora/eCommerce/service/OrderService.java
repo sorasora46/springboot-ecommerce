@@ -7,8 +7,8 @@ import me.sora.eCommerce.controller.advice.CustomException;
 import me.sora.eCommerce.dto.Order.CreateOrderRequest;
 import me.sora.eCommerce.dto.Order.CreateOrderResponse;
 import me.sora.eCommerce.dto.Order.GetOrderByIdResponse;
+import me.sora.eCommerce.entity.Order;
 import me.sora.eCommerce.entity.OrderItem;
-import me.sora.eCommerce.entity.Product;
 import me.sora.eCommerce.mapper.OrderMapper;
 import me.sora.eCommerce.repository.*;
 import org.springframework.http.HttpStatus;
@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -44,6 +45,14 @@ public class OrderService {
     }
 
     public Object getOrders(String username) {
+        var orders = orderRepository.findAllByUsername(username);
+
+        Map<String, List<OrderItem>> orderMap = new HashMap<>();
+
+        orders.forEach(order -> orderMap.put(order.getId(), order.getOrderItems()));
+
+        System.out.println(orderMap);
+
         return null;
     }
 

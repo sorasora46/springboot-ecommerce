@@ -32,7 +32,8 @@ public class OrderController {
 
     @GetMapping()
     public Object getOrders(@AuthenticationPrincipal UserDetails userDetails) {
-        return null;
+    var response = orderService.getOrders(userDetails.getUsername());
+        return ResponseEntity.ok().body(CommonResponse.of(SUCCESS, response));
     }
 
     @PostMapping()
