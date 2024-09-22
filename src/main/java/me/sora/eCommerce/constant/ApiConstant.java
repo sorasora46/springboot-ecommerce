@@ -7,9 +7,6 @@ public class ApiConstant {
         public static boolean FAILED = false;
     }
 
-    public static class CartAction {
-        public static String ADD = "ADD";
-        public static String REMOVE = "REMOVE";
-    }
+    public enum CartAction { ADD, REMOVE }
 
 }

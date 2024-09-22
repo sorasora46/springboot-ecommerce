@@ -7,7 +7,7 @@ import java.time.Instant;
 
 @Data
 @Builder
-public class UpdateProductInCartResponse {
+public class UpdateProductQuantityInCartResponse {
     private String productId;
     private Instant updatedDate;
 }

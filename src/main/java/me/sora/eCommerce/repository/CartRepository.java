@@ -24,7 +24,7 @@ public interface CartRepository extends JpaRepository<Cart, String> {
             "p.updatedDate) " +
             "FROM carts c, cart_items ci, products p " +
             "WHERE c.user = :user AND ci.cart = c AND ci.product = p")
-    Optional<List<GetProductResponse>> findCartItemsByUser(@Param("user") User user);
+    List<GetProductResponse> findCartItemsByUser(@Param("user") User user);
 
     Optional<Cart> findCartByUser(User user);
 

@@ -1,7 +1,6 @@
 package me.sora.eCommerce.service;
 
 import lombok.RequiredArgsConstructor;
-import me.sora.eCommerce.constant.ApiConstant;
 import me.sora.eCommerce.constant.ErrorConstant;
 import me.sora.eCommerce.controller.advice.CustomException;
 import me.sora.eCommerce.dto.Cart.*;
@@ -33,7 +32,7 @@ public class CartService {
     public GetCartResponse getCart(String username) {
         var user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
-        var items = cartRepository.findCartItemsByUser(user).orElse(null);
+        var items = cartRepository.findCartItemsByUser(user);
         return GetCartResponse.builder()
                 .cartItems(items)
                 .build();
@@ -106,7 +105,7 @@ public class CartService {
                 .build();
     }
 
-    public UpdateProductInCartResponse updateProductInCart(String productId, String action, String username) {
+    public UpdateProductQuantityInCartResponse updateProductQuantityInCart(String productId, String action, String username) {
         var user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
         var cart = cartRepository.findCartByUser(user)
@@ -146,7 +145,7 @@ public class CartService {
             }
         }
 
-        return UpdateProductInCartResponse.builder()
+        return UpdateProductQuantityInCartResponse.builder()
                 .productId(productId)
                 .updatedDate(now)
                 .build();

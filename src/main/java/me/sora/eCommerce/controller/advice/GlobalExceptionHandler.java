@@ -3,19 +3,23 @@ package me.sora.eCommerce.controller.advice;
 import io.jsonwebtoken.JwtException;
 import me.sora.eCommerce.dto.CommonResponse;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 
 import static me.sora.eCommerce.constant.ApiConstant.ApiStatus.FAILED;
 import static me.sora.eCommerce.constant.ErrorConstant.AUTHENTICATION_ERROR;
+import static me.sora.eCommerce.constant.ErrorConstant.CART_ACTION_INVALID;
 import static org.springframework.http.HttpStatus.*;
 
 @ControllerAdvice
@@ -63,6 +67,23 @@ public class GlobalExceptionHandler {
                 .toList();
         var response = CommonResponse.of(FAILED, ValidationErrorResponse.builder().errors(errors).build());
         return new ResponseEntity<>(response, ex.getStatusCode());
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<CommonResponse<ValidationErrorResponse>> handleValidationException2(MethodArgumentTypeMismatchException ex) {
+        var field = ex.getName();
+        var providedValue = Objects.requireNonNull(ex.getValue()).toString();
+
+        var validationError = ValidationErrorResponse.ValidationError.builder()
+                .field(field)
+                .message(CART_ACTION_INVALID)
+                .providedValue(providedValue)
+                .build();
+
+        var response = CommonResponse.of(FAILED, ValidationErrorResponse.builder()
+                        .errors(List.of(validationError))
+                .build());
+        return new ResponseEntity<>(response, BAD_REQUEST);
     }
 
     @ExceptionHandler(DataAccessException.class)
