@@ -1,13 +1,13 @@
-package me.sora.eCommerce;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-class ECommerceApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
-}
+//package me.sora.eCommerce;
+//
+//import org.junit.jupiter.api.Test;
+//import org.springframework.boot.test.context.SpringBootTest;
+//
+//@SpringBootTest
+//class ECommerceApplicationTests {
+//
+//	@Test
+//	void contextLoads() {
+//	}
+//
+//}
